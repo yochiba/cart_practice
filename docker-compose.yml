@@ -35,7 +35,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./client:/var/www/html/app/cart_practice/client
-      - ./client:/var/www/html/app/cart_practice/client/node_modules
+      - ./client/node_modules:/var/www/html/app/cart_practice/client/node_modules
     container_name: client
     tty: true
     ports:
