@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    container_name: mysql
+    tty: true
+    restart: always
+    ports: 
+      - 3306:3306
+    networks:
+      - cart-practice
+  # api:
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./api:/var/www/html/app/cart_practice/api
+  #     - ./api/.bundle:/usr/local/bundle
+  #   container_name: api
+  #   stdin_open: true
+  #   tty: true
+  #   ports:
+  #     - 3001:3001
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   networks:
+  #     - cart-practice
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/var/www/html/app/cart_practice/client
+      - ./client:/var/www/html/app/cart_practice/client/node_modules
+    container_name: client
+    tty: true
+    ports:
+      - 3000:3000
+    networks:
+      - cart-practice
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    container_name: nginx
+    tty: true
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      # - api_server
+      - client
+    networks:
+      - cart-practice
+networks:
+  cart-practice:
+    driver: bridge
