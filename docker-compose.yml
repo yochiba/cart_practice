@@ -12,23 +12,22 @@ services:
       - 3306:3306
     networks:
       - cart-practice
-  # api:
-  #   build:
-  #     context: ./api
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./api:/var/www/html/app/cart_practice/api
-  #     - ./api/.bundle:/usr/local/bundle
-  #   container_name: api
-  #   stdin_open: true
-  #   tty: true
-  #   ports:
-  #     - 3001:3001
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #   networks:
-  #     - cart-practice
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/var/www/html/app/cart_practice/api
+      # - ./api/.bundle:/usr/local/bundle
+    container_name: api
+    stdin_open: true
+    tty: true
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql
+    networks:
+      - cart-practice
   client:
     build:
       context: ./client
@@ -55,7 +54,7 @@ services:
       - 80:80
       - 443:443
     depends_on:
-      # - api_server
+      - api
       - client
     networks:
       - cart-practice
