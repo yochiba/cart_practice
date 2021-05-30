@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.scss';
+import Navigation from './component/Navigation';
+import ProductList from './component/ProductList';
+import ProductDetail from './component/ProductDetail';
+import Register from './component/Register';
+import RegisterConfirm from './component/RegisterConfirm';
+import Complete from './component/Complete';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navigation/>
+        <Switch>
+          <Route exact path='/' component={ProductList} />
+          <Route exact path='/product/:productId' component={ProductDetail} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/register-confirm' component={RegisterConfirm} />
+          <Route exact path='/complete' component={Complete} />
+        </Switch>
+      </Router>
     </div>
   );
 }
