@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./api:/var/www/html/app/cart_practice/api
-      - ./api/.bundle:/usr/local/bundle
+      # - ./api/.bundle:/usr/local/bundle
     container_name: api
     stdin_open: true
     tty: true

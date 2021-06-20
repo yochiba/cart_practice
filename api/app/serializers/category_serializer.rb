@@ -1,5 +1,12 @@
-class CategorySerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :created_at, :updated_at
+# frozen_string_literal: true
 
-  has_many :products
+class CategorySerializer < ActiveModel::Serializer
+  # has_many :products
+
+  attributes :id,
+             :name,
+             :serial_prefix,
+             :description,
+             :created_at,
+             :updated_at
 end
