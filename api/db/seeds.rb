@@ -1,7 +1,95 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# frozen_string_literal: true
+
+Category.create([
+  {
+    name: 'カテゴリー1',
+    serial_prefix: 'AAA',
+    description: 'カテゴリーAの説明文',
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+  },
+  {
+    name: 'カテゴリー2',
+    serial_prefix: 'BAA',
+    description: 'カテゴリーBの説明文',
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+  },
+  {
+    name: 'カテゴリー3',
+    serial_prefix: 'CAA',
+    description: 'カテゴリーCの説明文',
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+  },
+  {
+    name: 'カテゴリー4',
+    serial_prefix: 'DAA',
+    description: 'カテゴリーDの説明文',
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+  },
+])
+
+Product.create([
+  {
+    name: '商品1',
+    price: 200,
+    serial_number: 'AAA-000001',
+    stock: 10,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 1,
+    display_flag: 1,
+  },
+  {
+    name: '商品2',
+    price: 1200,
+    serial_number: 'BAA-000001',
+    stock: 10,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 2,
+    display_flag: 1,
+  },
+  {
+    name: '商品3',
+    price: 300,
+    serial_number: 'CAA-000001',
+    stock: 10,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 3,
+    display_flag: 1,
+  },
+  {
+    name: '商品4',
+    price: 800,
+    serial_number: 'DAA-000001',
+    stock: 15,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 4,
+    display_flag: 1,
+  },
+  {
+    name: '商品5',
+    price: 100,
+    serial_number: 'BAA-000002',
+    stock: 100,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 2,
+    display_flag: 1,
+  },
+  {
+    name: '商品6',
+    price: 1900,
+    serial_number: 'BAA-000003',
+    stock: 100,
+    created_at: '2021-06-20 00:00:00',
+    updated_at: '2021-06-20 00:00:00',
+    category_id: 2,
+    display_flag: 1,
+  },
+])

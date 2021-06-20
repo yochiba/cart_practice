@@ -13,21 +13,22 @@
 ActiveRecord::Schema.define(version: 2021_06_13_142842) do
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", comment: "カテゴリー名"
+    t.string "name", null: false, comment: "カテゴリー名"
+    t.string "serial_prefix", null: false, comment: "シリアル番号 接頭辞"
     t.text "description", comment: "カテゴリー説明"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", comment: "商品名"
-    t.integer "price", default: 0, comment: "商品価格"
-    t.string "serial_number", comment: "シリアルナンバー"
-    t.integer "stock", default: 0, comment: "商品在庫"
+    t.string "name", null: false, comment: "商品名"
+    t.integer "price", default: 0, null: false, comment: "商品価格"
+    t.string "serial_number", null: false, comment: "シリアルナンバー"
+    t.integer "stock", default: 0, null: false, comment: "商品在庫"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "category_id"
-    t.boolean "display_flag", default: false, null: false
+    t.bigint "category_id", comment: "カテゴリーID"
+    t.boolean "display_flag", default: false, null: false, comment: "公開・非公開フラグ 0:非公開 1:公開"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 

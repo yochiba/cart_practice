@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 app_path = File.expand_path('../../../', __FILE__)
 api_directory = '/api'
 

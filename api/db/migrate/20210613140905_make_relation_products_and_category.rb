@@ -1,6 +1,6 @@
 class MakeRelationProductsAndCategory < ActiveRecord::Migration[6.1]
   def up
-    add_reference :products, :category, index: true, nil: false
+    add_reference :products, :category, index: true, nil: false, comment: 'カテゴリーID'
   end
 
   def down
