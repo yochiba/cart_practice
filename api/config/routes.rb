@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
     namespace :v1 do
+      mount_devise_token_auth_for 'Account', at: 'auth', controllers: {
+        registrations: 'api/v1/auth/registrations'
+      }
       resources :products
       resources :categories
     end
