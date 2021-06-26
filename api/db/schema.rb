@@ -22,8 +22,6 @@ ActiveRecord::Schema.define(version: 2021_06_23_152201) do
     t.datetime "remember_created_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.string "firstname"
     t.string "lastname"
     t.string "email"

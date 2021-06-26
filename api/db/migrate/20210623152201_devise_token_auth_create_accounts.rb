@@ -5,25 +5,25 @@ class DeviseTokenAuthCreateAccounts < ActiveRecord::Migration[6.1]
     
     create_table(:accounts) do |t|
       ## Required
-      t.string :provider, :null => false, :default => "email"
-      t.string :uid, :null => false, :default => ""
+      t.string :provider, null: false, default: 'email'
+      t.string :uid, null: false, default: ''
 
       ## Database authenticatable
-      t.string :encrypted_password, :null => false, :default => ""
+      t.string :encrypted_password, null: false, default: ''
 
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
-      t.boolean  :allow_password_change, :default => false
+      t.boolean  :allow_password_change, default: false
 
       ## Rememberable
       t.datetime :remember_created_at
 
       ## Confirmable
-      t.string   :confirmation_token
-      t.datetime :confirmed_at
-      t.datetime :confirmation_sent_at
-      t.string   :unconfirmed_email # Only if using reconfirmable
+      # t.string   :confirmation_token
+      # t.datetime :confirmed_at
+      # t.datetime :confirmation_sent_at
+      # t.string   :unconfirmed_email # Only if using reconfirmable
 
       ## Lockable
       # t.integer  :failed_attempts, :default => 0, :null => false # Only if lock strategy is :failed_attempts
@@ -31,10 +31,10 @@ class DeviseTokenAuthCreateAccounts < ActiveRecord::Migration[6.1]
       # t.datetime :locked_at
 
       ## Account Info
-      t.string :firstname
-      t.string :lastname
-      t.string :email
-      t.string :phone
+      t.string :firstname, null: false, comment: '名'
+      t.string :lastname, null: false, comment: '姓'
+      t.string :email, null: false, comment: 'メールアドレス'
+      t.string :phone, null: false, commnet: '電話番号'
 
       ## Tokens
       t.text :tokens
