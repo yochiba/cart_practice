@@ -1,5 +1,24 @@
 # frozen_string_literal: true
 
+Account.create([
+  {
+    "firstname": "user1",
+    "lastname": "test1",
+    "email": "test1@test.com",
+    "phone": "08088881111",
+    "password": "testUser1",
+    "password_confirmation": "testUser1"
+  },
+  {
+    "firstname": "user2",
+    "lastname": "test2",
+    "email": "test2@test.com",
+    "phone": "08088882222",
+    "password": "testUser2",
+    "password_confirmation": "testUser2"
+  },
+])
+
 Category.create([
   {
     name: 'カテゴリー1',
