@@ -2,20 +2,20 @@
 
 Account.create([
   {
-    "firstname": "user1",
-    "lastname": "test1",
-    "email": "test1@test.com",
-    "phone": "08088881111",
-    "password": "testUser1",
-    "password_confirmation": "testUser1"
+    firstname: 'user1',
+    lastname: 'test1',
+    email: 'test1@test.com',
+    phone: '08088881111',
+    password: 'testUser1',
+    password_confirmation: 'testUser1'
   },
   {
-    "firstname": "user2",
-    "lastname": "test2",
-    "email": "test2@test.com",
-    "phone": "08088882222",
-    "password": "testUser2",
-    "password_confirmation": "testUser2"
+    firstname: 'user2',
+    lastname: 'test2',
+    email: 'test2@test.com',
+    phone: '08088882222',
+    password: 'testUser2',
+    password_confirmation: 'testUser2'
   },
 ])
 
@@ -53,6 +53,7 @@ Category.create([
 Product.create([
   {
     name: '商品1',
+    description: '商品1 説明',
     price: 200,
     serial_number: 'AAA-000001',
     stock: 10,
@@ -63,6 +64,7 @@ Product.create([
   },
   {
     name: '商品2',
+    description: '商品2 説明',
     price: 1200,
     serial_number: 'BAA-000001',
     stock: 10,
@@ -73,6 +75,7 @@ Product.create([
   },
   {
     name: '商品3',
+    description: '商品3 説明',
     price: 300,
     serial_number: 'CAA-000001',
     stock: 10,
@@ -83,6 +86,7 @@ Product.create([
   },
   {
     name: '商品4',
+    description: '商品4 説明',
     price: 800,
     serial_number: 'DAA-000001',
     stock: 15,
@@ -93,6 +97,7 @@ Product.create([
   },
   {
     name: '商品5',
+    description: '商品5 説明',
     price: 100,
     serial_number: 'BAA-000002',
     stock: 100,
@@ -103,6 +108,7 @@ Product.create([
   },
   {
     name: '商品6',
+    description: '商品6 説明',
     price: 1900,
     serial_number: 'BAA-000003',
     stock: 100,

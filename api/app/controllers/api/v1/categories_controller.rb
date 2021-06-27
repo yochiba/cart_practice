@@ -12,11 +12,11 @@ class Api::V1::CategoriesController < ApplicationController
 
   # POST /api/v1/categories
   def create
-    response = Category.create({
+    response = Category.create(
       name: params[:name],
       serial_prefix: params[:serial_prefix],
       description: params[:description],
-    })
+    )
     render json: response
   end
 

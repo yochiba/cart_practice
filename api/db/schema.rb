@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_152201) do
 
   create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "商品名"
+    t.text "description", comment: "商品説明"
     t.integer "price", default: 0, null: false, comment: "商品価格"
     t.string "serial_number", null: false, comment: "シリアルナンバー"
     t.integer "stock", default: 0, null: false, comment: "商品在庫"
