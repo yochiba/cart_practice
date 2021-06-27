@@ -20,16 +20,13 @@ ActiveRecord::Schema.define(version: 2021_06_23_152201) do
     t.datetime "reset_password_sent_at"
     t.boolean "allow_password_change", default: false
     t.datetime "remember_created_at"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.string "firstname"
-    t.string "lastname"
-    t.string "email"
-    t.string "phone"
+    t.string "firstname", null: false, comment: "名"
+    t.string "lastname", null: false, comment: "姓"
+    t.string "email", null: false, comment: "メールアドレス"
+    t.string "phone", null: false
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["confirmation_token"], name: "index_accounts_on_confirmation_token", unique: true
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_accounts_on_uid_and_provider", unique: true

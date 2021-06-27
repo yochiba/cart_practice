@@ -36,6 +36,7 @@ module Api
     # CORS
     cors_allowed_origins = ENV['CORS_ALLOWED_ORIGINS_HOST']
     config.x.cors_allowed_origins = ENV.fetch('CORS_ALLOWED_ORIGINS', cors_allowed_origins)
+
     # Rspec
     config.generators do |g|
       g.test_framework :rspec, 
