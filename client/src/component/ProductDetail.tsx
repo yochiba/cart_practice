@@ -1,84 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Axios from 'axios';
 
 type ProductDetailParams = {
   productId: string;
 }
 
-type ProductData = {
+type Product = {
   id: number;
-  productName: string;
+  name: string;
+  description: string;
   price: number;
-  categoryId: number;
-  serialNumber: string;
+  serial_number: string;
   stock: number;
-  createdAt: string;
-  updatedAt: string;
+  display_flag: boolean;
+  created_at: string;
+  updated_at: string;
+  category_id: number;
 }
 
-const initProductData: ProductData = {
+const initProduct = {
   id: 0,
-  productName: '',
+  name: '',
+  description: '',
   price: 0,
-  categoryId: 0,
-  serialNumber: '',
+  serial_number: '',
   stock: 0,
-  createdAt: '',
-  updatedAt: '',
+  display_flag: true,
+  created_at: '',
+  updated_at: '',
+  category_id: 0,
 }
 
-const PRODUCT_LIST_STUB: ProductData[] = [
-  {
-    id: 1,
-    productName: '鉛筆 1ダース',
-    price: 800,
-    categoryId: 1,
-    serialNumber: 'A-000001',
-    stock: 100,
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-  {
-    id: 2,
-    productName: 'クリアファイル 100枚セット',
-    price: 2800,
-    categoryId: 2,
-    stock: 100,
-    serialNumber: 'B-000001',
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-  {
-    id: 3,
-    productName: 'ノート',
-    price: 150,
-    stock: 100,
-    categoryId: 3,
-    serialNumber: 'C-000001',
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-];
-
-
-const ProductList: React.FC = () => {
+const ProductDetail: React.FC = () => {
   // 商品一覧のLinkのパラメータを取得
   const { productId } = useParams<ProductDetailParams>();
 
-  // スタブの配列のindex指定用
-  const displayIndex: number = Number(productId) - 1;
-
   // State管理
-  const [productData, setProductData] = useState<ProductData>(initProductData);
+  const [product, setProduct] = useState<Product>(initProduct);
   const [productCount, setProductCount] = useState<number>(0);
 
   // productIdが更新されたタイミングで呼び出されるメソッド。
   useEffect(() => {
-    // FIXME 非同期通信の課題でaxiosを導入
-    const productData: ProductData =  PRODUCT_LIST_STUB[displayIndex];
-    // Stateにデータをセット
-    setProductData(productData);    
-  }, [productId]);
+    Axios.get(`http://localhost/api/v1/products/${productId}`)
+      .then(res => {
+        const response = res.data.data;
+
+        const product = {
+          id: response.id,
+          name: response.attributes.name,
+          description: response.attributes.description,
+          price: response.attributes.price,
+          serial_number: response.attributes.serial_number,
+          stock: response.attributes.stock,
+          display_flag: response.attributes.display_flag,
+          created_at: response.attributes.created_at,
+          updated_at: response.attributes.updated_at,
+          category_id: response.attributes.category_id,
+        }
+        setProduct(product);
+      })
+  }, [])
 
   // TODO productToCartを更新するメソッドを作成する。
   const handleProductToCart = (e: any) => {
@@ -96,18 +78,18 @@ const ProductList: React.FC = () => {
     <div className='Product'>
       <h1>商品詳細ページ</h1>
       <div className='product-detail-container'>
-        <h2>{productData.productName}</h2>
-        <p>価格：{productData.price}円</p>
-        <p>シリアル：{productData.serialNumber}</p>
+        <h2>{product.name}</h2>
+        <p>価格：{product.price}円</p>
+        <p>シリアル：{product.serial_number}</p>
         <select
           className='product-count-select'
           name='productCount'
-          id={`product${productData.id}`}
+          id={`product${product.id}`}
           onChange={(e) => {handleProductToCart(e)}}
         >
-          <option value='1' key={`${productData.id}-1`}>1</option>
-          <option value='2' key={`${productData.id}-2`}>2</option>
-          <option value='3' key={`${productData.id}-3`}>3</option>
+          <option value='1' key={`${product.id}-1`}>1</option>
+          <option value='2' key={`${product.id}-2`}>2</option>
+          <option value='3' key={`${product.id}-3`}>3</option>
         </select>
         <button
           className='cart-add-btn'
@@ -120,4 +102,4 @@ const ProductList: React.FC = () => {
   );
 }
 
-export default ProductList;
+export default ProductDetail;

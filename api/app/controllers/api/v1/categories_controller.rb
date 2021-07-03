@@ -12,11 +12,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   # POST /api/v1/categories
   def create
-    response = Category.create(
-      name: params[:name],
-      serial_prefix: params[:serial_prefix],
-      description: params[:description],
-    )
+    response = Category.new().create_category(params)
     render json: response
   end
 
@@ -43,6 +39,6 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def create_params
-    params.require(:category).permit(:name, :serial_prefix, :description)
+    params.require(:category).permit(:name, :description)
   end
 end

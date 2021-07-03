@@ -1,61 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
-type ProductData = {
+type Product = {
   id: number;
-  productName: string;
+  name: string;
+  description: string;
   price: number;
-  categoryId: number;
-  serialNumber: string;
+  serial_number: string;
   stock: number;
-  createdAt: string;
-  updatedAt: string;
+  display_flag: boolean;
+  created_at: string;
+  updated_at: string;
+  category_id: number;
 }
 
-const PRODUCT_LIST_STUB: ProductData[] = [
+const initProducts = [
   {
-    id: 1,
-    productName: '鉛筆 1ダース',
-    price: 800,
-    categoryId: 1,
-    serialNumber: 'A-000001',
-    stock: 100,
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-  {
-    id: 2,
-    productName: 'クリアファイル 100枚セット',
-    price: 2800,
-    categoryId: 2,
-    stock: 100,
-    serialNumber: 'B-000001',
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-  {
-    id: 3,
-    productName: 'ノート',
-    price: 150,
-    stock: 100,
-    categoryId: 3,
-    serialNumber: 'C-000001',
-    createdAt: '2021-05-31 00:00:00',
-    updatedAt: '2021-05-31 00:00:00',
-  },
-];
+    id: 0,
+    name: '',
+    description: '',
+    price: 0,
+    serial_number: '',
+    stock: 0,
+    display_flag: true,
+    created_at: '',
+    updated_at: '',
+    category_id: 0,
+  }
+]
 
 const ProductList: React.FC = () => {
+  // State管理
+  const [products, setProducts] = useState<Product[]>(initProducts);
+
+  useEffect(() => {
+    Axios.get(`http://localhost/api/v1/products`)
+      .then(res => {
+        const responses = res.data.data
+        console.log(responses);
+
+        let products: Product[] = []
+        responses.map((response: any) => {
+          const product = response.attributes;
+          products.push({
+            id: response.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            serial_number: product.serial_number,
+            stock: product.stock,
+            display_flag: product.display_flag,
+            created_at: product.created_at,
+            updated_at: product.updated_at,
+            category_id: product.category_id,
+          });
+        })
+        setProducts(products);
+      })
+  }, [])
+
   return (
     <div className='ProductList'>
       <h1>商品一覧</h1>
-      {PRODUCT_LIST_STUB.map((product: ProductData) => {
+      {products.map((product: Product) => {
         return (
           <div className='productBox' key={`productBox${product.id}`}>
             <Link to={`/product/${product.id}`}>
-              <h2>{product.productName}</h2>
+              <h2>{product.name}</h2>
               <p>価格：{product.price}円</p>
-              <p>シリアル：{product.serialNumber}</p>
+              <p>シリアル：{product.serial_number}</p>
             </Link>
           </div>
         );
