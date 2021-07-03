@@ -16,4 +16,21 @@ class Category < ApplicationRecord
   validates :name, presence: true
   validates :serial_prefix, presence: true, uniqueness: true,
              length: { is: 3 }, format: { with: VALID_SERIAL_PREFIX_FORMAT }
+
+  # category生成
+  def create_category(params)
+    # serial_prefix生成
+    last_category = Category.order(id: :asc).last
+    serial_prefix = if last_category.present?
+                      last_category.serial_prefix.succ
+                    else
+                      'AAA'
+                    end
+
+    Category.create!(
+      name: params[:name],
+      serial_prefix: serial_prefix,
+      description: params[:description],
+    )
+  end
 end

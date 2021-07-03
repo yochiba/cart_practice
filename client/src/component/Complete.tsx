@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Complete: React.FC = () => {
   return (
     <div className='Complete'>
-      <h1>Complete</h1>
+      <h1>購入が完了しました。</h1>
     </div>
   );
 }
