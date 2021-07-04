@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -6,11 +6,11 @@ const Navigation: React.FC = () => {
   return (
     <nav className='Navigation'>
       <Link to='/'>Home</Link>
-      <div className='cart'>
-        <Link to='/register'>
-          <FontAwesomeIcon icon='shopping-cart' />
-        </Link>
-      </div>
+      <Link to='/sign-in'>ログイン</Link>
+      <Link to='/sign-up'>新規登録</Link>
+      <Link to='/cart'>
+        <FontAwesomeIcon className='cart-icon' icon='shopping-cart' />
+      </Link>
     </nav>
   );
 }
