@@ -36,28 +36,31 @@ const ProductList: React.FC = () => {
 
   useEffect(() => {
     Axios.get(`http://localhost/api/v1/products`)
-      .then(res => {
-        const responses = res.data.data
-        console.log(responses);
+    .then(res => {
+      const responses = res.data.data
+      console.log(responses);
 
-        let products: Product[] = []
-        responses.map((response: any) => {
-          const product = response.attributes;
-          products.push({
-            id: response.id,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            serial_number: product.serial_number,
-            stock: product.stock,
-            display_flag: product.display_flag,
-            created_at: product.created_at,
-            updated_at: product.updated_at,
-            category_id: product.category_id,
-          });
-        })
-        setProducts(products);
+      let products: Product[] = []
+      responses.map((response: any) => {
+        const product = response.attributes;
+        products.push({
+          id: response.id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          serial_number: product.serial_number,
+          stock: product.stock,
+          display_flag: product.display_flag,
+          created_at: product.created_at,
+          updated_at: product.updated_at,
+          category_id: product.category_id,
+        });
       })
+      setProducts(products);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }, [])
 
   return (

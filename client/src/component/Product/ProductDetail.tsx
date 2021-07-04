@@ -43,22 +43,25 @@ const ProductDetail: React.FC = () => {
   // productIdが更新されたタイミングで呼び出されるメソッド。
   useEffect(() => {
     Axios.get(`http://localhost/api/v1/products/${productId}`)
-      .then(res => {
-        const response = res.data.data;
+    .then(res => {
+      const response = res.data.data;
 
-        const product = {
-          id: response.id,
-          name: response.attributes.name,
-          description: response.attributes.description,
-          price: response.attributes.price,
-          serial_number: response.attributes.serial_number,
-          stock: response.attributes.stock,
-          display_flag: response.attributes.display_flag,
-          created_at: response.attributes.created_at,
-          updated_at: response.attributes.updated_at,
-          category_id: response.attributes.category_id,
+      const product = {
+        id: response.id,
+        name: response.attributes.name,
+        description: response.attributes.description,
+        price: response.attributes.price,
+        serial_number: response.attributes.serial_number,
+        stock: response.attributes.stock,
+        display_flag: response.attributes.display_flag,
+        created_at: response.attributes.created_at,
+        updated_at: response.attributes.updated_at,
+        category_id: response.attributes.category_id,
       }
-        setProduct(product);
+      setProduct(product);
+    })
+    .catch(error => {
+      console.log(error);
     })
 }, [])
 
