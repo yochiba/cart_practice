@@ -3,15 +3,15 @@ import './App.scss';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 
-import Navigation from './component/Navigation';
-import ProductList from './component/Product/ProductList';
-import ProductDetail from './component/Product/ProductDetail';
-import Register from './component/Register';
-import RegisterConfirm from './component/RegisterConfirm';
-import Complete from './component/Complete';
-import Cart from './component/Cart';
-import SignIn from './component/Account/SignIn';
-import SignUp from './component/Account/SignUp';
+import Navigation from './components/Navigation';
+import ProductList from './components/Product/ProductList';
+import ProductDetail from './components/Product/ProductDetail';
+import Register from './components/Register';
+import RegisterConfirm from './components/RegisterConfirm';
+import Complete from './components/Complete';
+import Cart from './components/Cart';
+import SignIn from './components/Account/SignIn';
+import SignUp from './components/Account/SignUp';
 
 library.add(faShoppingCart);
 
