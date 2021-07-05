@@ -127,7 +127,7 @@ const SignUp: React.FC = () => {
   const confirmationModal = () => {
     if (modalFlag) {
       return (
-        <form onSubmit={(e) => {handleSubmitAccountData(e)}}>
+        <form onSubmit={(e) => {handleSubmitSignUp(e)}}>
           {signUpConfirmationInputs()}
           <button onClick={()=> setModalFlag(false)}>内容修正</button>
           <input
@@ -141,7 +141,7 @@ const SignUp: React.FC = () => {
     }
   }
 
-  const handleSubmitAccountData = (e: any) => {
+  const handleSubmitSignUp = (e: any) => {
     e.preventDefault();
 
     Axios.post(`http://localhost/api/v1/auth`, accountSignUp, {headers: Common.headers})

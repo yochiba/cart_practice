@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { AppState } from '../../modules/index';
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import { AccountState, accountActions } from '../../modules/Account';
 import Common from '../../Common';
 import Axios from 'axios';
 
 const SignIn: React.FC = () => {
+  // Redux
+  const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+
   // State管理
   const [accountSignIn, setAccountSignIn] = useState<Common.AccountSignIn>(Common.initialAccountSignIn);
 
@@ -41,12 +47,17 @@ const SignIn: React.FC = () => {
     );
   }
 
-  const handleSubmitAccountData = (e: any) => {
+  const handleSubmitSignIn = (e: any) => {
     e.preventDefault();
 
     Axios.post(`http://localhost/api/v1/auth/sign_in`, accountSignIn, {headers: Common.headers})
     .then(res => {
       console.log(res);
+      // ここの更新方法あってる？
+      accountActions.updateAccessToken(res.headers['access-token']);
+      accountActions.updateProvider(res.data.data.provider);
+      accountActions.updateUid(res.data.data.uid);
+      console.log(accountStore);
       setAccountSignIn(Common.initialAccountSignIn);
     })
     .catch(error => {
@@ -57,7 +68,7 @@ const SignIn: React.FC = () => {
   return (
     <div className='SignIn'>
       <h1>SignIn</h1>
-      <form onSubmit={(e) => {handleSubmitAccountData(e)}}>
+      <form onSubmit={(e) => {handleSubmitSignIn(e)}}>
         {signInInputs()}
         <input type='submit' value='ログイン' />
       </form>
