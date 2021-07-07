@@ -3,11 +3,12 @@
 module Api::V1
   class Auth::SessionsController < DeviseTokenAuth::SessionsController  
     before_action :sign_in_params, only: :create
+    # before_action :sign_out_params, only: :destroy
 
     private
 
     def sign_in_params
-      params.permit(:email, :password, :session)
+      params.permit(:email, :password, :session, :headers)
     end
   end
 end

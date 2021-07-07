@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { AppState } from '../../modules/index';
-import { useSelector } from "react-redux";
+import { AppState } from '../../stores/index';
+import { AccountState, accountActions } from '../../stores/Account';
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
-import { AccountState, accountActions } from '../../modules/Account';
-import Common from '../../Common';
+import Util from '../../Common/Util';
+import Headers from '../../Common/Headers';
+import Api from '../../Common/Api';
 import Axios from 'axios';
 
 const SignIn: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+  const accountDispatch = useDispatch();
 
   // State管理
-  const [accountSignIn, setAccountSignIn] = useState<Common.AccountSignIn>(Common.initialAccountSignIn);
+  const [accountSignIn, setAccountSignIn] = useState<Util.AccountSignIn>(Util.initialAccountSignIn);
 
   const onChangeSignInInput = (e: any) => {
     const name: string = e.target.name;
@@ -31,15 +34,21 @@ const SignIn: React.FC = () => {
 
   const signInInputs = () => {
     return (
-      Common.SIGN_IN_FORMAT.map((signInData: Common.InputFormat) => {
+      Util.SIGN_IN_FORMAT.map((signInData: Util.InputFormat) => {
         return (
           <div className={signInData.name}>
-            <label htmlFor={`sign-in-${signInData.name}`}>{signInData.displayName}</label>
+            <label
+              htmlFor={`sign-in-${signInData.name}`}
+              key={`sign-in-label-${signInData.name}`}
+            >
+              {signInData.displayName}
+            </label>
             <input
               type={signInData.type}
               id={`sign-in-${signInData.name}`}
               name={signInData.name}
               onChange={(e) => {onChangeSignInInput(e)}}
+              key={`sign-in-input-${signInData.name}`}
             />
           </div>
         );
@@ -50,15 +59,18 @@ const SignIn: React.FC = () => {
   const handleSubmitSignIn = (e: any) => {
     e.preventDefault();
 
-    Axios.post(`http://localhost/api/v1/auth/sign_in`, accountSignIn, {headers: Common.headers})
+    Axios.post(Api.accountSignIn, accountSignIn, {headers: Headers.axiosPost})
     .then(res => {
-      console.log(res);
-      // ここの更新方法あってる？
-      accountActions.updateAccessToken(res.headers['access-token']);
-      accountActions.updateProvider(res.data.data.provider);
-      accountActions.updateUid(res.data.data.uid);
-      console.log(accountStore);
-      setAccountSignIn(Common.initialAccountSignIn);
+      // dispatch
+      accountDispatch(accountActions.updateId(Number(res.data.data.id)));
+      accountDispatch(accountActions.updateEmail(res.data.data.email));
+      accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
+      accountDispatch(accountActions.updateProvider(res.data.data.provider));
+      accountDispatch(accountActions.updateUid(res.data.data.uid));
+      accountDispatch(accountActions.updateFirstname(res.data.data.firstname));
+      accountDispatch(accountActions.updateLastname(res.data.data.lastname));
+
+      setAccountSignIn(Util.initialAccountSignIn);
     })
     .catch(error => {
       console.log(error);
