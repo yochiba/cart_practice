@@ -1,16 +1,31 @@
-namespace Common {
+namespace Util {
+  // cart type
+  export type CartProduct = {
+    id: number;
+    name: string;
+    price: number;
+    serial_number: string;
+    category_id: number;
+    count: number;
+  };
 
-  export const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://localhost',
-  }
+  export const initialCartProductList: CartProduct[] = [
+    {
+      id: 0,
+      name: '',
+      price: 0,
+      serial_number: '',
+      category_id: 0,
+      count: 0,
+    }
+  ];
 
   // inputFormat
   export type InputFormat = {
     displayName: string;
     name: string;
     type: string;
-　}
+　};
 
   // アカウント新規登録
   export type AccountSignUp = {
@@ -20,7 +35,7 @@ namespace Common {
     phone: string;
     password: string;
     password_confirmation: string;
-  }
+  };
 
   export const initialAccountSignUp: AccountSignUp = {
     firstname: '',
@@ -29,7 +44,7 @@ namespace Common {
     phone: '',
     password: '',
     password_confirmation: '',
-  }
+  };
 
   // 新規登録のデータフォーマット
   export const SIGN_UP_FORMAT: InputFormat[] = [
@@ -69,12 +84,12 @@ namespace Common {
   export type AccountSignIn = {
     email: string;
     password: string;
-  }
+  };
 
   export const initialAccountSignIn: AccountSignIn = {
     email: '',
     password: '',
-  }
+  };
 
   // アカウント ログイン
   export const SIGN_IN_FORMAT: InputFormat[] = [
@@ -89,6 +104,6 @@ namespace Common {
       type: 'password',
     },
   ];
-}
+};
 
-export default Common;
+export default Util;

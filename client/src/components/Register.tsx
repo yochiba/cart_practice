@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AppState } from '../stores/index';
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { AccountState, accountActions } from '../stores/Account';
 
 const Register: React.FC = () => {
+  // Redux
+  const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+
+  useEffect(() => {
+    console.log(accountStore);
+    if (accountStore.accessToken === '') {
+      console.log('ログインしないとあかんで〜');
+    }
+  }, []);
+
   return (
     <section className='Register'>
       <h1>商品確認＆ユーザー情報入力</h1>

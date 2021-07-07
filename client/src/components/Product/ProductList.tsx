@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import Api from '../../Common/Api';
 
 type Product = {
   id: number;
@@ -35,10 +36,9 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(initProducts);
 
   useEffect(() => {
-    Axios.get(`http://localhost/api/v1/products`)
+    Axios.get(Api.productList)
     .then(res => {
-      const responses = res.data.data
-      console.log(responses);
+      const responses = res.data.data;
 
       let products: Product[] = []
       responses.map((response: any) => {

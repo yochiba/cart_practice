@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import Common from '../../Common';
+import { AppState } from '../../stores/index';
+import { AccountState, accountActions } from '../../stores/Account';
+import { useSelector, useDispatch } from "react-redux";
+import Util from '../../Common/Util';
+import Headers from '../../Common/Headers';
+import Api from '../../Common/Api';
 import Axios from 'axios';
 
 const SignUp: React.FC = () => {
+  // Redux
+  const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+  const accountDispatch = useDispatch();
+
   // State管理
-  const [accountSignUp, setAccountSignUp] = useState<Common.AccountSignUp>(Common.initialAccountSignUp);
+  const [accountSignUp, setAccountSignUp] = useState<Util.AccountSignUp>(Util.initialAccountSignUp);
   const [modalFlag, setModalFlag] = useState<boolean>(false);
 
   const onChangeSignUpInput = (e: any) => {
@@ -37,15 +46,21 @@ const SignUp: React.FC = () => {
 
   const signUpInputs = () => {
     return (
-      Common.SIGN_UP_FORMAT.map((signUpData: Common.InputFormat) => {
+      Util.SIGN_UP_FORMAT.map((signUpData: Util.InputFormat) => {
         return (
           <div className={signUpData.name}>
-            <label htmlFor={`sign-up-${signUpData.name}`}>{signUpData.displayName}</label>
+            <label
+              htmlFor={`sign-up-${signUpData.name}`}
+              key={`sign-up-label-${signUpData.name}`}
+            >
+              {signUpData.displayName}
+            </label>
             <input
               type={signUpData.type}
               id={`sign-up-${signUpData.name}`}
               name={signUpData.name}
               onChange={(e) => {onChangeSignUpInput(e)}}
+              key={`sign-up-input-${signUpData.name}`}
             />
           </div>
         );
@@ -110,7 +125,7 @@ const SignUp: React.FC = () => {
 
   const signUpConfirmationInputs = () => {
     return (
-      Common.SIGN_UP_FORMAT.map((signUpData: Common.InputFormat) => {
+      Util.SIGN_UP_FORMAT.map((signUpData: Util.InputFormat) => {
         if (signUpData.name !== 'password_confirmation') {
           return (
             <div className={`${signUpData.name}`}>
@@ -144,10 +159,18 @@ const SignUp: React.FC = () => {
   const handleSubmitSignUp = (e: any) => {
     e.preventDefault();
 
-    Axios.post(`http://localhost/api/v1/auth`, accountSignUp, {headers: Common.headers})
+    Axios.post(Api.accountSignUp, accountSignUp, {headers: Headers.axiosPost})
     .then(res => {
-      console.log(res);
-      setAccountSignUp(Common.initialAccountSignUp);
+      // dispatch
+      accountDispatch(accountActions.updateId(res.data.data.id));
+      accountDispatch(accountActions.updateEmail(res.data.data.email));
+      accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
+      accountDispatch(accountActions.updateProvider(res.data.data.provider));
+      accountDispatch(accountActions.updateUid(res.data.data.uid));
+      accountDispatch(accountActions.updateFirstname(res.data.data.firstname));
+      accountDispatch(accountActions.updateLastname(res.data.data.lastname));
+
+      setAccountSignUp(Util.initialAccountSignUp);
     })
     .catch(error => {
       console.log(error);
