@@ -83,6 +83,12 @@ const ProductDetail: React.FC = () => {
 
   // カート追加
   const onClickCart = () => {
+
+    // FIXME すでにカートに同じ商品が存在する場合
+    // if (cartProduct.some(cart => cart.id === displayProduct.id)) {
+    //   let targetProduct: Util.CartProduct = cartProduct.find(product => product.id === displayProduct.id);
+    // }
+
     // カートに追加する商品
     const addingProduct: Util.CartProduct = {
       id: displayProduct.id,

@@ -1,4 +1,6 @@
 namespace Util {
+  // HOST
+  export const hostUrl: string = 'http://localhost';
   // cart type
   export type CartProduct = {
     id: number;
