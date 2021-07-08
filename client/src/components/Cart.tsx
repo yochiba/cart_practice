@@ -8,9 +8,12 @@ import Util from '../Common/Util';
 const Cart: React.FC = () => {
   // Redux
   const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
-  
-  console.log(cartStore);
+  const cartDispatch = useDispatch();
 
+  const removeFromCart = (id: number) => {
+    console.log('FIXME カートから削除');
+    // cartDispatch();
+  }
   return (
     <div className='Cart'>
       <h1>カート</h1>
@@ -22,7 +25,7 @@ const Cart: React.FC = () => {
                 <h2>{cart.name}</h2>
                 <h2>{cart.price}</h2>
                 <h2>{cart.count}</h2>
-                <button>カートから削除する</button>
+                <button onClick={() => {removeFromCart(cart.id)}}>削除する</button>
               </div>
             );
           })

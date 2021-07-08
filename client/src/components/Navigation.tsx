@@ -4,15 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppState } from '../stores/index';
 import { AccountState, accountActions } from '../stores/Account';
 import { useSelector, useDispatch } from "react-redux";
-import Headers from '../Common/Headers';
 import Api from '../Common/Api';
 import Axios from 'axios';
-
-type SignOut = {
-  access_token: string;
-  uid: string;
-  provider: string;
-}
 
 const Navigation: React.FC = () => {
   // Redux
@@ -22,21 +15,14 @@ const Navigation: React.FC = () => {
   const signOut = (e: any) => {
     e.preventDefault();
 
-    // sign outパラメータ
-    // const accountSignOut: SignOut = {
-    //   access_token: accountStore.accessToken,
-    //   uid: accountStore.uid,
-    //   provider: accountStore.provider,
-    // }
-
-    // Axios.delete(`${Api.accountSignOut}?access-token=${accountStore.accessToken}&uid=${accountStore.uid}&provider=${accountStore.provider}`)
-    Axios.delete(`${Api.accountSignOut}/`)
+    Axios.delete(`${Api.accountSignOut}?access-token=${accountStore.accessToken}&client=${accountStore.client}&uid=${accountStore.uid}`)
     .then(res => {
       // dispatch
       accountDispatch(accountActions.updateId(0));
       accountDispatch(accountActions.updateEmail(''));
       accountDispatch(accountActions.updateAccessToken(''));
       accountDispatch(accountActions.updateProvider(''));
+      accountDispatch(accountActions.updateClient(''));
       accountDispatch(accountActions.updateUid(''));
       accountDispatch(accountActions.updateFirstname(''));
       accountDispatch(accountActions.updateLastname(''));
@@ -47,7 +33,7 @@ const Navigation: React.FC = () => {
   }
 
 
-  if (accountStore.accessToken && accountStore.uid && accountStore.provider) {
+  if (accountStore.accessToken && accountStore.uid && accountStore.client) {
     return (
       <nav className='Navigation'>
         <Link to='/'>Home</Link>

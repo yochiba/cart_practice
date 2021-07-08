@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { AppState } from '../../stores/index';
-import { AccountState, accountActions } from '../../stores/Account';
-import { useSelector, useDispatch } from "react-redux";
+import { accountActions } from '../../stores/Account';
+import { useDispatch } from "react-redux";
 import Util from '../../Common/Util';
 import Headers from '../../Common/Headers';
 import Api from '../../Common/Api';
@@ -9,7 +8,6 @@ import Axios from 'axios';
 
 const SignUp: React.FC = () => {
   // Redux
-  const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
   const accountDispatch = useDispatch();
 
   // State管理
@@ -93,7 +91,6 @@ const SignUp: React.FC = () => {
     if (name === 'password') {
       return (
         <>
-          <label htmlFor={`sign-up-confirmation-${name}`}>{displayName}: ******</label>
           <input
             type='hidden'
             id={`sign-up-confirmation-${name}`}
@@ -166,6 +163,7 @@ const SignUp: React.FC = () => {
       accountDispatch(accountActions.updateEmail(res.data.data.email));
       accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
       accountDispatch(accountActions.updateProvider(res.data.data.provider));
+      accountDispatch(accountActions.updateClient(res.headers['client']));
       accountDispatch(accountActions.updateUid(res.data.data.uid));
       accountDispatch(accountActions.updateFirstname(res.data.data.firstname));
       accountDispatch(accountActions.updateLastname(res.data.data.lastname));

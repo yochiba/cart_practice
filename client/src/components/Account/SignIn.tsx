@@ -16,6 +16,7 @@ const SignIn: React.FC = () => {
   // State管理
   const [accountSignIn, setAccountSignIn] = useState<Util.AccountSignIn>(Util.initialAccountSignIn);
 
+  // サインインフォームのInputハンドリング
   const onChangeSignInInput = (e: any) => {
     const name: string = e.target.name;
     const value: string = e.target.value;
@@ -66,6 +67,7 @@ const SignIn: React.FC = () => {
       accountDispatch(accountActions.updateEmail(res.data.data.email));
       accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
       accountDispatch(accountActions.updateProvider(res.data.data.provider));
+      accountDispatch(accountActions.updateClient(res.headers['client']));
       accountDispatch(accountActions.updateUid(res.data.data.uid));
       accountDispatch(accountActions.updateFirstname(res.data.data.firstname));
       accountDispatch(accountActions.updateLastname(res.data.data.lastname));
