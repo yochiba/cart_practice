@@ -9,18 +9,10 @@ namespace Util {
     serial_number: string;
     category_id: number;
     count: number;
+    stock: number;
   };
 
-  export const initialCartProductList: CartProduct[] = [
-    {
-      id: 0,
-      name: '',
-      price: 0,
-      serial_number: '',
-      category_id: 0,
-      count: 0,
-    }
-  ];
+  export const initialCartProductList: CartProduct[] = [];
 
   // inputFormat
   export type InputFormat = {

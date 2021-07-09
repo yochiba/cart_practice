@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { AppState } from './stores/index';
 import { AccountState } from './stores/Account';
+import { CartState } from './stores/Cart';
 import { useSelector } from "react-redux";
 import Navigation from './components/Navigation';
 import ProductList from './components/Product/ProductList';
@@ -20,6 +21,7 @@ library.add(faShoppingCart);
 const App: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+  const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
 
   const accountSignIn = () => {
     if (accountStore.accessToken && accountStore.uid && accountStore.client) {
@@ -39,7 +41,16 @@ const App: React.FC = () => {
           {/* セッション持たせないとダメっぽい ここから */}
           <Route
             exact path='/register'
-            render={ () => accountSignIn() ? <Register /> : <SignIn /> }
+            // render={ () => accountSignIn() && cartStore.cart.length !== 0 ? <Register /> : <SignIn /> }
+            render={() => {
+              if (cartStore.cart.length === 0) {
+                return <ProductList />
+              } else if (accountSignIn()) {
+                return <SignIn />
+              } else {
+                return <Register />
+              }
+            }}
           />
           <Route exact path='/register/confirm' component={RegisterConfirm} />
           <Route exact path='/complete' component={Complete} />
