@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { AppState } from '../../stores/index';
 import { CartState, cartActions } from '../../stores/Cart';
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +37,8 @@ const initDisplayProduct = {
   category_id: 0,
 }
 
+const initialCartCount: number = 1;
+
 const ProductDetail: React.FC = () => {
   // Redux
   const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
@@ -48,7 +50,7 @@ const ProductDetail: React.FC = () => {
   // State管理
   const [displayProduct, setDisplayProduct] = useState<DisplayProduct>(initDisplayProduct);
   const [cartProduct, setCartProduct] = useState<Util.CartProduct[]>(Util.initialCartProductList);
-  const [productCount, setProductCount] = useState<number>(0);
+  const [productCount, setProductCount] = useState<number>(initialCartCount);
 
   // productIdが更新されたタイミングで呼び出されるメソッド。
   useEffect(() => {
@@ -74,7 +76,7 @@ const ProductDetail: React.FC = () => {
     .catch(error => {
       console.log(error);
     })
-}, [])
+  }, [])
 
   const onChangeProductCount = (e: any) => {
     const value: number = Number(e.target.value);
@@ -82,26 +84,47 @@ const ProductDetail: React.FC = () => {
   }
 
   // カート追加
-  const onClickCart = () => {
-
-    // FIXME すでにカートに同じ商品が存在する場合
-    // if (cartProduct.some(cart => cart.id === displayProduct.id)) {
-    //   let targetProduct: Util.CartProduct = cartProduct.find(product => product.id === displayProduct.id);
-    // }
-
-    // カートに追加する商品
-    const addingProduct: Util.CartProduct = {
-      id: displayProduct.id,
-      name: displayProduct.name,
-      price: displayProduct.price,
-      serial_number: displayProduct.serial_number,
-      category_id: displayProduct.category_id,
-      count: productCount,
-    };
-
-    cartProduct.push(addingProduct);
+  const addToCart = () => {
+    if (cartProduct.some(cart => cart.id === displayProduct.id)) {
+      // すでにカートに同じ商品が存在する場合
+      cartProduct.map((product: Util.CartProduct) => {
+        if (product.id === displayProduct.id) {
+          product.count += productCount;
+        }
+      });
+    } else {
+      // 新規でカートに追加する商品
+      const addingProduct: Util.CartProduct = {
+        id: displayProduct.id,
+        name: displayProduct.name,
+        price: displayProduct.price,
+        serial_number: displayProduct.serial_number,
+        category_id: displayProduct.category_id,
+        count: productCount,
+        stock: displayProduct.stock - productCount,
+      };
+      cartProduct.push(addingProduct);
+    }
     // Redux カート更新
     cartDispatch(cartActions.updateCart(cartProduct));
+
+    // 最新の商品情報
+    // const updatedProduct = {
+    //   id: displayProduct.id,
+    //   name: displayProduct.name,
+    //   description: displayProduct.description,
+    //   price: displayProduct.price,
+    //   serial_number: displayProduct.serial_number,
+    //   stock: 1,
+    //   display_flag: displayProduct.display_flag,
+    //   created_at: displayProduct.created_at,
+    //   updated_at: displayProduct.updated_at,
+    //   category_id: displayProduct.category_id,
+    // }
+
+    // // 商品情報更新
+    // setDisplayProduct(updatedProduct);
+    // setProductCount(1);
   }
 
   // 商品の個数 select
@@ -152,7 +175,7 @@ const ProductDetail: React.FC = () => {
         {productCountSelect()}
         <button
           className='add-to-cart-btn'
-          onClick={() => {onClickCart()}}
+          onClick={() => {addToCart()}}
         >
           カートに追加
         </button>
