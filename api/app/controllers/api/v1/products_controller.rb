@@ -34,11 +34,12 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   private
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    def create_params
-      params.require(:product).permit(:name, :description, :price, :stock, :category_id, :display_flag)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def create_params
+    params.require(:product).permit(:name, :description, :price, :stock, :category_id, :display_flag)
+  end
 end
