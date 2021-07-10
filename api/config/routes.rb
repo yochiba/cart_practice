@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         registrations: 'api/v1/auth/registrations',
         sessions: 'api/v1/auth/sessions'
       }
+      resources :accounts, only: [:index, :show]
       resources :products
       resources :categories
     end

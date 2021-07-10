@@ -54,7 +54,7 @@ const ProductDetail: React.FC = () => {
 
   // productIdが更新されたタイミングで呼び出されるメソッド。
   useEffect(() => {
-    Axios.get(`${Api.productDetail}/${productId}`)
+    Axios.get(`${Api.fetchProduct}/${productId}`)
     .then(res => {
       const response = res.data.data;
 

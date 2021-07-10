@@ -5,10 +5,15 @@ namespace Api {
   export const accountSignIn: string = 'http://localhost/api/v1/auth/sign_in';
   // DELETE アカウント サインアウト
   export const accountSignOut: string = 'http://localhost/api/v1/auth/sign_out';
-  // POST 商品リスト
-  export const productList: string = 'http://localhost/api/v1/products';
-  // POST 商品詳細
-  export const productDetail: string = 'http://localhost/api/v1/products';
+
+  // GET アカウント一覧 取得
+  export const fetchAccountList: string = 'http://localhost/api/v1/accounts';
+  // GET アカウント 取得
+  export const fetchAccount: string = 'http://localhost/api/v1/accounts';
+  // POST 商品一覧 取得
+  export const fetchProductList: string = 'http://localhost/api/v1/products';
+  // POST 商品 取得
+  export const fetchProduct: string = 'http://localhost/api/v1/products';
 }
 
 export default Api;

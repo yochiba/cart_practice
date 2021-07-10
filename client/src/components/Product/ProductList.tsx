@@ -36,7 +36,7 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(initProducts);
 
   useEffect(() => {
-    Axios.get(Api.productList)
+    Axios.get(Api.fetchProductList)
     .then(res => {
       const responses = res.data.data;
 
