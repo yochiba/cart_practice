@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AppState } from '../stores/index';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AccountState, accountActions } from '../stores/Account';
 
@@ -8,12 +8,7 @@ const Register: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
 
-  useEffect(() => {
-    console.log(accountStore);
-    if (accountStore.accessToken === '') {
-      console.log('ログインしないとあかんで〜');
-    }
-  }, []);
+  // TODO registerが完了したらsessionsを作成する。
 
   return (
     <section className='Register'>
