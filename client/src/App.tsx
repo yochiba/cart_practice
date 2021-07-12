@@ -24,11 +24,7 @@ const App: React.FC = () => {
   const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
 
   const accountSignIn = () => {
-    if (accountStore.accessToken && accountStore.uid && accountStore.client) {
-      return true;
-    } else {
-      return false;
-    }
+    return accountStore.accessToken !== '' && accountStore.uid !== '' && accountStore.client !== '';
   }
 
   return (
@@ -38,15 +34,17 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path='/' component={ProductList} />
           <Route exact path='/product/:productId' component={ProductDetail} />
+          <Route exact path='/cart' component={Cart} />
           {/* セッション持たせないとダメっぽい ここから */}
           <Route
             exact path='/register'
             // render={ () => accountSignIn() && cartStore.cart.length !== 0 ? <Register /> : <SignIn /> }
             render={() => {
+              console.log('IN');
               if (cartStore.cart.length === 0) {
-                return <ProductList />
-              } else if (accountSignIn()) {
-                return <SignIn />
+                return <Redirect to='/' />
+              } else if (!accountSignIn()) {
+                return <Redirect to='/sign-in' />
               } else {
                 return <Register />
               }
@@ -54,7 +52,6 @@ const App: React.FC = () => {
           />
           <Route exact path='/register/confirm' component={RegisterConfirm} />
           <Route exact path='/complete' component={Complete} />
-          <Route exact path='/cart' component={Cart} />
           {/* セッション持たせないとダメっぽい ここまで */}
           <Route 
             exact path='/sign-in'

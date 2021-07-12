@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AppState } from '../../stores/index';
 import { CartState, cartActions } from '../../stores/Cart';
 import { useSelector, useDispatch } from "react-redux";
@@ -107,24 +107,6 @@ const ProductDetail: React.FC = () => {
     }
     // Redux カート更新
     cartDispatch(cartActions.updateCart(cartProduct));
-
-    // 最新の商品情報
-    // const updatedProduct = {
-    //   id: displayProduct.id,
-    //   name: displayProduct.name,
-    //   description: displayProduct.description,
-    //   price: displayProduct.price,
-    //   serial_number: displayProduct.serial_number,
-    //   stock: 1,
-    //   display_flag: displayProduct.display_flag,
-    //   created_at: displayProduct.created_at,
-    //   updated_at: displayProduct.updated_at,
-    //   category_id: displayProduct.category_id,
-    // }
-
-    // // 商品情報更新
-    // setDisplayProduct(updatedProduct);
-    // setProductCount(1);
   }
 
   // 商品の個数 select
@@ -173,12 +155,13 @@ const ProductDetail: React.FC = () => {
         </div>
         <h3>個数：</h3>
         {productCountSelect()}
-        <button
+        <Link
+          to='/cart'
           className='add-to-cart-btn'
           onClick={() => {addToCart()}}
         >
           カートに追加
-        </button>
+        </Link>
       </div>
     </section>
   );

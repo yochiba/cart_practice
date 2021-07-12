@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppState } from '../stores/index';
 import { CartState, cartActions } from '../stores/Cart';
@@ -12,7 +12,6 @@ const Cart: React.FC = () => {
 
   // カートから削除
   const removeFromCart = (id: number) => {
-    console.log('FIXME カートから削除');
     cartStore.cart.map((product: Util.CartProduct, index: number) => {
       if (product.id === id) {
         cartStore.cart.splice(index, 1);
@@ -22,7 +21,7 @@ const Cart: React.FC = () => {
   }
 
   // 商品の個数制御
-  const productCount = (id: number, stock: number) => {
+  const productCount = (id: number, count: number, stock: number) => {
     return (
       <select
         className='product-count-select'
@@ -30,19 +29,21 @@ const Cart: React.FC = () => {
         id={`product${id}`}
         onChange={(e) => {onChangeProductCount(e, id)}}
       >
-        {productCountOption(id, stock)}
+        {productCountOption(id, count, stock)}
       </select>
     )
   }
 
   // 商品の個数 option
-  const productCountOption = (id: number, stock: number) => {
+  const productCountOption = (id: number, count: number,stock: number) => {
     let optionHtmlList = [];
     for (let optionCount: number = 1; optionCount <= stock; optionCount++) {
+      const selected: boolean = optionCount === count;
       const optionHtml = (
         <option
           value={optionCount}
           key={`option${id}-${optionCount}`}
+          selected={selected}
         >
           {optionCount}
         </option>
@@ -83,7 +84,7 @@ const Cart: React.FC = () => {
               <div className='cart-item-box'>
                 <h2>{cart.name}</h2>
                 <h2>小計：{totalPrice}円</h2>
-                <h2>カート個数{productCount(cart.id, cart.stock)}</h2>
+                <h2>カート個数{productCount(cart.id, cart.count, cart.stock)}</h2>
                 <button onClick={() => {removeFromCart(cart.id)}}>削除する</button>
               </div>
             );
