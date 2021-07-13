@@ -101,7 +101,7 @@ const ProductDetail: React.FC = () => {
         serial_number: displayProduct.serial_number,
         category_id: displayProduct.category_id,
         count: productCount,
-        stock: displayProduct.stock - productCount,
+        stock: displayProduct.stock,
       };
       cartProduct.push(addingProduct);
     }

@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 import Navigation from './components/Navigation';
 import ProductList from './components/Product/ProductList';
 import ProductDetail from './components/Product/ProductDetail';
-import Register from './components/Register';
-import RegisterConfirm from './components/RegisterConfirm';
+import Purchase from './components/Purchase';
+import PurchaseConfirm from './components/PurchaseConfirm';
 import Complete from './components/Complete';
 import Cart from './components/Cart';
 import SignIn from './components/Account/SignIn';
@@ -37,20 +37,18 @@ const App: React.FC = () => {
           <Route exact path='/cart' component={Cart} />
           {/* セッション持たせないとダメっぽい ここから */}
           <Route
-            exact path='/register'
-            // render={ () => accountSignIn() && cartStore.cart.length !== 0 ? <Register /> : <SignIn /> }
+            exact path='/purchase'
             render={() => {
-              console.log('IN');
               if (cartStore.cart.length === 0) {
                 return <Redirect to='/' />
               } else if (!accountSignIn()) {
                 return <Redirect to='/sign-in' />
               } else {
-                return <Register />
+                return <Purchase />
               }
             }}
           />
-          <Route exact path='/register/confirm' component={RegisterConfirm} />
+          <Route exact path='/purchase/confirm' component={PurchaseConfirm} />
           <Route exact path='/complete' component={Complete} />
           {/* セッション持たせないとダメっぽい ここまで */}
           <Route 
