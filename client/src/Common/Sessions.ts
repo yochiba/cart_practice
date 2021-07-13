@@ -1,18 +1,18 @@
 namespace Sessions {
-  // Registered sessions
-  export type registeredSessions = {
+  // Purchase sessions
+  export type purchaseSessions = {
     sessionToken: string;
     accessToken: string;
-    preRegistered: boolean;
+    prePurchase: boolean;
     createdAt: Date;
     updatedAt: Date;
   }
 
   const initialDate: Date = new Date('1900/01/01 00:00:00')
-  export const initialRegisteredSessions = {
+  export const initialPurchaseSessions = {
     sessionToken: '',
     accessToken: '',
-    preRegistered: true,
+    prePurchase: true,
     createdAt: initialDate,
     updatedAt: initialDate,
   }

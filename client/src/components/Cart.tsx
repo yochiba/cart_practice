@@ -20,6 +20,7 @@ const Cart: React.FC = () => {
     cartDispatch(cartActions.updateCart(cartStore.cart));
   }
 
+  // FIXME リファクタリング
   // 商品の個数制御
   const productCount = (id: number, count: number, stock: number) => {
     return (
@@ -65,9 +66,9 @@ const Cart: React.FC = () => {
   }
 
   // レジに進むリンク
-  const proceedRegister = () => {
+  const proceedPurchase = () => {
     if (cartStore.cart.length !== 0) {
-      return (<Link to='/register'>レジへ進む</Link>);
+      return (<Link to='/purchase'>レジへ進む</Link>);
     } else {
       return (<h2>カートは空です。</h2>);
     }
@@ -91,7 +92,7 @@ const Cart: React.FC = () => {
           })
         }
       </div>
-      {proceedRegister()}
+      {proceedPurchase()}
     </div>
   );
 }
