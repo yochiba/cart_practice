@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { accountActions } from '../../stores/Account';
 import { useDispatch } from "react-redux";
 import Util from '../../Common/Util';
@@ -30,6 +30,18 @@ const SignUp: React.FC = () => {
         break;
       case 'phone':
         setAccountSignUp({...accountSignUp, phone: value})
+        break;
+      case 'zip':
+        setAccountSignUp({...accountSignUp, zip: value})
+        break;
+      case 'address_one':
+        setAccountSignUp({...accountSignUp, address_one: value})
+        break;
+      case 'address_two':
+        setAccountSignUp({...accountSignUp, address_two: value})
+        break;
+      case 'address_three':
+        setAccountSignUp({...accountSignUp, address_three: value})
         break;
       case 'password':
         setAccountSignUp({...accountSignUp, password: value})
@@ -80,6 +92,18 @@ const SignUp: React.FC = () => {
         break;
       case 'phone':
         value = accountSignUp.phone;
+        break;
+      case 'zip':
+        value = accountSignUp.zip;
+        break;
+      case 'address_one':
+        value = accountSignUp.address_one;
+        break;
+      case 'address_two':
+        value = accountSignUp.address_two;
+        break;
+      case 'address_three':
+        value = accountSignUp.address_three;
         break;
       case 'password':
         value = accountSignUp.password;

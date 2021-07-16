@@ -27,6 +27,10 @@ namespace Util {
     lastname: string;
     email: string;
     phone: string;
+    zip: string;
+    address_one: string;
+    address_two: string;
+    address_three: string;
     password: string;
     password_confirmation: string;
   };
@@ -37,6 +41,10 @@ namespace Util {
     lastname: '',
     email: '',
     phone: '',
+    zip: '',
+    address_one: '',
+    address_two: '',
+    address_three: '',
     password: '',
     password_confirmation: '',
   };
@@ -62,6 +70,26 @@ namespace Util {
       displayName: '電話番号',
       name: 'phone',
       type: 'tel',
+    },
+    {
+      displayName: '郵便番号',
+      name: 'zip',
+      type: 'text',
+    },
+    {
+      displayName: '住所1',
+      name: 'address_one',
+      type: 'text',
+    },
+    {
+      displayName: '住所2',
+      name: 'address_two',
+      type: 'text',
+    },
+    {
+      displayName: '住所3',
+      name: 'address_three',
+      type: 'text',
     },
     {
       displayName: 'パスワード',
@@ -110,7 +138,7 @@ namespace Util {
     password_confirmation: string;
   };
 
-  // アカウント新規登録 初期値
+  // 購入情報 初期値
   export const initialPurchase: Purchase = {
     firstname: '',
     lastname: '',

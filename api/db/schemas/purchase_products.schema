@@ -1,0 +1,11 @@
+create_table 'purchase_products', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+  t.integer 'total_count', default: 0, null: false, comment: '商品別 購入数'
+  t.integer 'total_price', default: 0, null: false, comment: '商品別 合計金額'
+  t.datetime 'created_at', precision: 6, null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.bigint 'purchase_history_id', null: false, comment: '商品購入履歴ID'
+  t.bigint 'product_id', null: false, comment: '商品ID'
+  t.integer 'delivery_status', default: 0, null: false, comment: '配送ステータス 0:準備中 1:配送手続き中 2:配送中 3:配送完了'
+  t.index ["purchase_history_id"], name: "index_purchase_products_on_purchase_history_id"
+  t.index ["product_id"], name: "index_purchase_products_on_product_id"
+end
