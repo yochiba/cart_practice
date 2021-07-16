@@ -1,0 +1,14 @@
+create_table 'purchase_histories', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+  t.integer 'shipping_type', default: 0, null: false, comment: '配送方法'
+  t.integer 'shipping_status', default: 0, null: false, comment: '配送状況'
+  t.integer 'payment_type', default: 0, null: false, comment: '支払い方法'
+  t.integer 'payment_status', default: 0, null: false, comment: '支払い状況'
+  t.text 'message', comment: '要望等'
+  t.integer 'total_price', default: 0, null: false
+  t.datetime 'created_at', precision: 6, null: false
+  t.datetime 'updated_at', precision: 6, null: false
+  t.bigint 'account_id', null: false, comment: 'アカウントID'
+  t.bigint 'delivery_id', null: false, comment: 'お届け先ID'
+  t.index ["account_id"], name: "index_purchase_histories_on_account_id"
+  t.index ["delivery_id"], name: "index_purchase_histories_on_delivery_id"
+end

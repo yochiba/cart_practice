@@ -1,3 +1,0 @@
-require 'accounts.schema'
-require 'categories.schema'
-require 'products.schema'
