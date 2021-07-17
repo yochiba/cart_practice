@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AccountSerializer < ActiveModel::Serializer
+class DeliverySerializer < ActiveModel::Serializer
   attributes :id,
              :firstname,
              :lastname,
@@ -11,5 +11,5 @@ class AccountSerializer < ActiveModel::Serializer
              :address_two,
              :address_three,
              :created_at,
-             :updated_at
+             :updated_at,
 end

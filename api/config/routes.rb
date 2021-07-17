@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       resources :accounts, only: [:index, :show]
       resources :products
       resources :categories
+      resources :purchase_histories
+      resources :purchase_products
+      resources :deliveries
     end
   end
 end

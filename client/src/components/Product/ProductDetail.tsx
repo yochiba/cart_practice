@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AppState } from '../../stores/index';
 import { CartState, cartActions } from '../../stores/Cart';
-import { AccountState, accountActions } from '../../stores/Account';
 import { useSelector, useDispatch } from "react-redux";
 import Axios from 'axios';
 import Api from '../../Common/Api';
@@ -43,7 +42,7 @@ const initialCartCount: number = 1;
 const ProductDetail: React.FC = () => {
   // Redux
   const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
-  const cartDispatch = useDispatch();
+  const dispatch = useDispatch();
   
 
   // 商品一覧のLinkのパラメータを取得
@@ -108,7 +107,7 @@ const ProductDetail: React.FC = () => {
       cartProduct.push(addingProduct);
     }
     // Redux カート更新
-    cartDispatch(cartActions.updateCart(cartProduct));
+    dispatch(cartActions.updateCart(cartProduct));
   }
 
   // 商品の個数 select
