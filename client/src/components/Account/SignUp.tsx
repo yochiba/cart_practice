@@ -8,7 +8,7 @@ import Axios from 'axios';
 
 const SignUp: React.FC = () => {
   // Redux
-  const accountDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // State管理
   const [accountSignUp, setAccountSignUp] = useState<Util.AccountSignUp>(Util.initialAccountSignUp);
@@ -183,14 +183,14 @@ const SignUp: React.FC = () => {
     Axios.post(Api.accountSignUp, accountSignUp, {headers: Headers.axiosPost})
     .then(res => {
       // dispatch
-      accountDispatch(accountActions.updateId(res.data.data.id));
-      accountDispatch(accountActions.updateEmail(res.data.data.email));
-      accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
-      accountDispatch(accountActions.updateProvider(res.data.data.provider));
-      accountDispatch(accountActions.updateClient(res.headers['client']));
-      accountDispatch(accountActions.updateUid(res.data.data.uid));
-      accountDispatch(accountActions.updateFirstname(res.data.data.firstname));
-      accountDispatch(accountActions.updateLastname(res.data.data.lastname));
+      dispatch(accountActions.updateId(res.data.data.id));
+      dispatch(accountActions.updateEmail(res.data.data.email));
+      dispatch(accountActions.updateAccessToken(res.headers['access-token']));
+      dispatch(accountActions.updateProvider(res.data.data.provider));
+      dispatch(accountActions.updateClient(res.headers['client']));
+      dispatch(accountActions.updateUid(res.data.data.uid));
+      dispatch(accountActions.updateFirstname(res.data.data.firstname));
+      dispatch(accountActions.updateLastname(res.data.data.lastname));
 
       setAccountSignUp(Util.initialAccountSignUp);
     })
