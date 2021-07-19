@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Products", type: :request do
-  let(:products) { FactoryBot.create(:products) }
+  let(:category) { FactoryBot.create(:category) }
+  let(:product) { FactoryBot.create(:product, category) }
 
   context 'GET /api/v1/products' do
     before { get api_v1_products_path }
@@ -11,7 +12,7 @@ RSpec.describe "Api::V1::Products", type: :request do
   end
 
   context 'GET /api/v1/products/:id' do
-    before { get "/api/v1/products/#{products.first.id}" }
+    before { get "/api/v1/products/#{product.id}" }
     it { expect(response).to have_http_status 200 }
   end
 end
