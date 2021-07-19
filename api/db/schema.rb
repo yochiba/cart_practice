@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -20,14 +20,14 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "reset_password_sent_at"
     t.boolean "allow_password_change", default: false
     t.datetime "remember_created_at"
-    t.string "firstname", null: false, comment: "名"
-    t.string "lastname", null: false, comment: "姓"
+    t.string "firstname_ciphertext", null: false, comment: "名"
+    t.string "lastname_ciphertext", null: false, comment: "姓"
     t.string "email", null: false, comment: "メールアドレス"
     t.string "phone", null: false, comment: "電話番号"
-    t.string "zip", null: false, comment: "郵便番号"
-    t.string "address_one", null: false, comment: "住所1"
-    t.string "address_two", null: false, comment: "住所2"
-    t.string "address_three", comment: "住所3 建物等"
+    t.string "zip_ciphertext", null: false, comment: "郵便番号"
+    t.string "address_one_ciphertext", null: false, comment: "都道府県 市区町村"
+    t.string "address_two_ciphertext", null: false, comment: "番地"
+    t.string "address_three_ciphertext", comment: "建物名"
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["uid", "provider"], name: "index_accounts_on_uid_and_provider", unique: true
   end
 
-  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false, comment: "カテゴリー名"
     t.string "serial_prefix", null: false, comment: "シリアル番号 接頭辞"
     t.text "description", comment: "カテゴリー説明"
@@ -44,20 +44,20 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "deliveries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "firstname", null: false, comment: "名"
-    t.string "lastname", null: false, comment: "姓"
-    t.string "email", null: false, comment: "メールアドレス"
-    t.string "phone", null: false, comment: "電話番号"
-    t.string "zip", null: false, comment: "郵便番号"
-    t.string "address_one", null: false, comment: "住所1"
-    t.string "address_two", null: false, comment: "住所2"
-    t.string "address_three", comment: "住所3 建物等"
+  create_table "deliveries", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "firstname_ciphertext", null: false, comment: "名"
+    t.string "lastname_ciphertext", null: false, comment: "姓"
+    t.string "email_ciphertext", null: false, comment: "メールアドレス"
+    t.string "phone_ciphertext", null: false, comment: "電話番号"
+    t.string "zip_ciphertext", null: false, comment: "郵便番号"
+    t.string "address_one_ciphertext", null: false, comment: "都道府県 市区町村"
+    t.string "address_two_ciphertext", null: false, comment: "番地"
+    t.string "address_three_ciphertext", comment: "建物名"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "products", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false, comment: "商品名"
     t.text "description", comment: "商品説明"
     t.integer "price", default: 0, null: false, comment: "商品価格"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
-  create_table "purchase_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "purchase_histories", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.integer "shipping_type", default: 0, null: false, comment: "配送方法"
     t.integer "shipping_status", default: 0, null: false, comment: "配送状況"
     t.integer "payment_type", default: 0, null: false, comment: "支払い方法"
@@ -85,14 +85,13 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["delivery_id"], name: "index_purchase_histories_on_delivery_id"
   end
 
-  create_table "purchase_products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "purchase_products", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.integer "total_count", default: 0, null: false, comment: "商品別 購入数"
     t.integer "total_price", default: 0, null: false, comment: "商品別 合計金額"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "purchase_history_id", null: false, comment: "商品購入履歴ID"
     t.bigint "product_id", null: false, comment: "商品ID"
-    t.integer "delivery_status", default: 0, null: false, comment: "配送ステータス 0:準備中 1:配送手続き中 2:配送中 3:配送完了"
     t.index ["product_id"], name: "index_purchase_products_on_product_id"
     t.index ["purchase_history_id"], name: "index_purchase_products_on_purchase_history_id"
   end
