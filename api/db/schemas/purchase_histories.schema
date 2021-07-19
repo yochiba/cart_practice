@@ -1,4 +1,4 @@
-create_table 'purchase_histories', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+create_table 'purchase_histories', charset: 'utf8mb4', collation: 'utf8mb4_bin', force: :cascade do |t|
   t.integer 'shipping_type', default: 0, null: false, comment: '配送方法'
   t.integer 'shipping_status', default: 0, null: false, comment: '配送状況'
   t.integer 'payment_type', default: 0, null: false, comment: '支払い方法'
