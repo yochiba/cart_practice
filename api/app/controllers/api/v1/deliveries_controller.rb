@@ -17,6 +17,6 @@ class Api::V1::DeliveriesController < ApplicationController
   private
 
   def set_purchase_puroduct
-    @purchase_history = PurchaseProduct.find(params[:id])
+    @purchase_history ||= PurchaseProduct.find(params[:id])
   end
 end

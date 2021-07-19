@@ -29,14 +29,17 @@ class Api::V1::ProductsController < ApplicationController
 
   # DELETE /api/v1/products/:id
   def destroy
-    @product.destroy
-    render json: { status: 200, result: 'ok' }
+    if @product.destroy
+      render json: { status: :ok, result: :ok }
+    else
+      render json: { status: :error, result: :error }
+    end
   end
 
   private
 
   def set_product
-    @product = Product.find(params[:id])
+    @product ||= Product.find(params[:id])
   end
 
   def create_params

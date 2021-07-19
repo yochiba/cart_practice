@@ -28,14 +28,18 @@ class Api::V1::CategoriesController < ApplicationController
 
   # DELETE /api/v1/categories/:id
   def destroy
-    @category.destroy
-    render json: { status: 200, result: 'ok' }
+    if @category.destroy
+      render json: { status: :ok, result: :ok }
+    else
+      render json: { status: :error, result: :error }
+    end
+  end
   end
 
   private
 
   def set_category
-    @category = Category.find(params[:id])
+    @category ||= Category.find(params[:id])
   end
 
   def create_params

@@ -17,11 +17,12 @@ class Api::V1::PurchaseHistoriesController < ApplicationController
   # POST /api/v1/purchase_histories
   def create
     
+    # render json: 
   end
 
   private
 
   def set_purchase_history
-    @purchase_history = PurchaseHistory.find(params[:id])
+    @purchase_history ||= PurchaseHistory.find(params[:id])
   end
 end
