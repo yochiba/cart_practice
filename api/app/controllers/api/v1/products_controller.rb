@@ -6,7 +6,7 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /api/v1/products
   def index
-    response = Product.where.not(display_flag: false)
+    response = Product.displayable
     render json: response
   end
 

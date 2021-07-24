@@ -7,7 +7,6 @@ const actionCreator = actionCreatorFactory();
 // Account Action
 export const accountActions = {
   updateId: actionCreator<number>('ACTIONS_UPDATE_ID'),
-  updateEmail: actionCreator<string>('ACTIONS_UPDATE_EMAIL'),
   updateAccessToken: actionCreator<string>('ACTIONS_UPDATE_ACCESS_TOKEN'),
   updateProvider: actionCreator<string>('ACTIONS_UPDATE_PROVIDER'),
   updateClient: actionCreator<string>('ACTIONS_CLIENT'),
@@ -19,7 +18,6 @@ export const accountActions = {
 // Account Reducer interface
 export interface AccountState {
   id: number;
-  email: string;
   accessToken: string;
   provider: string;
   client: string;
@@ -31,7 +29,6 @@ export interface AccountState {
 // Account Reducer initial state
 const initialAccountState: AccountState = {
   id: 0,
-  email: '',
   accessToken: '',
   provider: '',
   client: '',
@@ -44,9 +41,6 @@ const initialAccountState: AccountState = {
 export const AccountReducer = reducerWithInitialState(initialAccountState)
   .case(accountActions.updateId, (state, id) => {
     return Object.assign({}, state, { id });
-  })
-  .case(accountActions.updateEmail, (state, email) => {
-    return Object.assign({}, state, { email });
   })
   .case(accountActions.updateAccessToken, (state, accessToken) => {
     return Object.assign({}, state, { accessToken });

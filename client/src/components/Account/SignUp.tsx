@@ -184,7 +184,6 @@ const SignUp: React.FC = () => {
     .then(res => {
       // dispatch
       dispatch(accountActions.updateId(res.data.data.id));
-      dispatch(accountActions.updateEmail(res.data.data.email));
       dispatch(accountActions.updateAccessToken(res.headers['access-token']));
       dispatch(accountActions.updateProvider(res.data.data.provider));
       dispatch(accountActions.updateClient(res.headers['client']));

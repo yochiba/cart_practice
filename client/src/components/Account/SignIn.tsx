@@ -64,7 +64,6 @@ const SignIn: React.FC = () => {
     .then(res => {
       // dispatch
       accountDispatch(accountActions.updateId(Number(res.data.data.id)));
-      accountDispatch(accountActions.updateEmail(res.data.data.email));
       accountDispatch(accountActions.updateAccessToken(res.headers['access-token']));
       accountDispatch(accountActions.updateProvider(res.data.data.provider));
       accountDispatch(accountActions.updateClient(res.headers['client']));

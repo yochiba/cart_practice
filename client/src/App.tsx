@@ -10,7 +10,7 @@ import Navigation from './components/Navigation';
 import ProductList from './components/Product/ProductList';
 import ProductDetail from './components/Product/ProductDetail';
 import Purchase from './components/Purchase';
-import PurchaseConfirm from './components/PurchaseConfirm';
+import PurchaseConfirmation from './components/PurchaseConfirmation';
 import Complete from './components/Complete';
 import Cart from './components/Cart';
 import SignIn from './components/Account/SignIn';
@@ -48,7 +48,7 @@ const App: React.FC = () => {
               }
             }}
           />
-          <Route exact path='/purchase/confirm' component={PurchaseConfirm} />
+          <Route exact path='/purchase/confirmation' component={PurchaseConfirmation} />
           <Route exact path='/complete' component={Complete} />
           {/* セッション持たせないとダメっぽい ここまで */}
           <Route 

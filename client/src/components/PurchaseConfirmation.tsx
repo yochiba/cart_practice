@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const PurchaseConfirm: React.FC = () => {
+const PurchaseConfirmation: React.FC = () => {
   return (
     <div className='PurchaseConfirm'>
       <h1>PurchaseConfirm</h1>
@@ -9,4 +9,4 @@ const PurchaseConfirm: React.FC = () => {
   );
 }
 
-export default PurchaseConfirm;
+export default PurchaseConfirmation;
