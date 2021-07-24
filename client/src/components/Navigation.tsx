@@ -19,7 +19,6 @@ const Navigation: React.FC = () => {
     .then(res => {
       // dispatch
       accountDispatch(accountActions.updateId(0));
-      accountDispatch(accountActions.updateEmail(''));
       accountDispatch(accountActions.updateAccessToken(''));
       accountDispatch(accountActions.updateProvider(''));
       accountDispatch(accountActions.updateClient(''));
@@ -34,6 +33,7 @@ const Navigation: React.FC = () => {
 
 
   if (accountStore.accessToken && accountStore.uid && accountStore.client) {
+    console.log(accountStore.lastname);
     return (
       <nav className='Navigation'>
         <Link to='/'>Home</Link>

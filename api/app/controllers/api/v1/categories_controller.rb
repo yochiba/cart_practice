@@ -34,7 +34,6 @@ class Api::V1::CategoriesController < ApplicationController
       render json: { status: :error, result: :error }
     end
   end
-  end
 
   private
 

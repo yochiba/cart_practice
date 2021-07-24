@@ -1,6 +1,7 @@
 namespace Util {
   // HOST
   export const hostUrl: string = 'http://localhost';
+
   // cart type
   export type CartProduct = {
     id: number;
@@ -77,17 +78,17 @@ namespace Util {
       type: 'text',
     },
     {
-      displayName: '住所1',
+      displayName: '都道府県 市区町村',
       name: 'address_one',
       type: 'text',
     },
     {
-      displayName: '住所2',
+      displayName: '番地',
       name: 'address_two',
       type: 'text',
     },
     {
-      displayName: '住所3',
+      displayName: '建物名',
       name: 'address_three',
       type: 'text',
     },
@@ -128,28 +129,155 @@ namespace Util {
     },
   ];
 
-  // 購入情報
-  export type Purchase = {
+  // 購入履歴 データ型
+  export type PurchaseHistory = {
+    payment_type: number;
+    payment_status: number;
+    shipping_type: number;
+    shipping_status: number;
+    message: string;
+    total_price: number;
+  };
+
+  // 購入履歴 初期値
+  export const initialPurchaseHistory: PurchaseHistory = {
+    payment_type: 0,
+    payment_status: 0,
+    shipping_type: 0,
+    shipping_status: 0,
+    message: '',
+    total_price: 0,
+  };
+
+  // 購入履歴 登録フォーマット
+  export const PURCHASE_HISTORY_FORMAT: InputFormat[] = [
+    {
+      displayName: 'お支払い方法',
+      name: 'payment_type',
+      type: 'radio',
+    },
+    {
+      displayName: 'お支払い状況',
+      name: 'payment_status',
+      type: 'hidden',
+    },
+    {
+      displayName: '配達方法',
+      name: 'delivery_type',
+      type: 'radio',
+    },
+    {
+      displayName: '配達状況',
+      name: 'delivery_status',
+      type: 'hidden',
+    },
+    {
+      displayName: 'その他 要望等',
+      name: 'message',
+      type: 'text_area',
+    },
+    {
+      displayName: '合計金額',
+      name: 'total_price',
+      type: 'hidden',
+    },
+  ];
+
+  export type typeOption = {
+    name: string;
+    value: number;
+  }
+
+  // 支払い方法 オプション
+  export const paymentTypeOptions: typeOption[] = [
+    {
+      name: '代金引換',
+      value: 0,
+    },
+    {
+      name: 'クレジットカード',
+      value: 1,
+    },
+  ];
+
+  // 支払い状況 オプション
+  export const paymentStatusOptions: typeOption[] = [
+    {
+      name: '支払い待ち',
+      value: 0,
+    },
+    {
+      name: '支払い済み',
+      value: 1,
+    },
+    {
+      name: '支払いエラー 要確認',
+      value: 2,
+    },
+  ];
+
+  // 配達方法 オプション
+  export const deliveryTypeOptions: typeOption[] = [
+    {
+      name: 'お届け(玄関)',
+      value: 0,
+    },
+    {
+      name: 'お届け(宅配BOX)',
+      value: 1,
+    },
+    {
+      name: 'コンビニ受け取り',
+      value: 2,
+    },
+  ];
+
+  // 配達状況 オプション
+  export const deliveryStatusOptions: typeOption[] = [
+    {
+      name: '配達準備中',
+      value: 0,
+    },
+    {
+      name: '配達中',
+      value: 1,
+    },
+    {
+      name: '配達済み',
+      value: 2,
+    },
+    {
+      name: '配達エラー 要確認',
+      value: 3,
+    },
+  ];
+
+  // 配送先 データ型
+  export type Delivery = {
     firstname: string;
     lastname: string;
     email: string;
     phone: string;
-    password: string;
-    password_confirmation: string;
-  };
+    zip: string;
+    address_one: string;
+    address_two: string;
+    address_three: string;
+  }
 
-  // 購入情報 初期値
-  export const initialPurchase: Purchase = {
+  // 配送先 初期値
+  export const initialDelivery: Delivery = {
     firstname: '',
     lastname: '',
     email: '',
     phone: '',
-    password: '',
-    password_confirmation: '',
-  };
+    zip: '',
+    address_one: '',
+    address_two: '',
+    address_three: '',
+  }
 
-  // 購入情報登録
-  export const PURCHASE_FORMAT: InputFormat[] = [
+  // 配送先 登録フォーマット
+  export const DELIVERY_FORMAT: InputFormat[] = [
     {
       displayName: '姓',
       name: 'lastname',
@@ -171,59 +299,24 @@ namespace Util {
       type: 'text',
     },
     {
-      displayName: '購入者 郵便番号',
-      name: 'purchaser_zip',
+      displayName: '配送先 郵便番号',
+      name: 'zip',
       type: 'text',
     },
     {
-      displayName: '購入者 住所1',
-      name: 'purchaser_address_1',
+      displayName: '配送先 都道府県 市区町村',
+      name: 'address_one',
       type: 'text',
     },
     {
-      displayName: '購入者 住所2',
-      name: 'purchaser_address_2',
+      displayName: '配送先 番地',
+      name: 'address_two',
       type: 'text',
     },
     {
-      displayName: '購入者 住所3',
-      name: 'purchaser_address_3',
+      displayName: '配送先 建物名',
+      name: 'address_three',
       type: 'text',
-    },
-    {
-      displayName: 'お届け先 郵便番号',
-      name: 'delivery_zip',
-      type: 'text',
-    },
-    {
-      displayName: 'お届け先 住所1',
-      name: 'delivery_address_1',
-      type: 'text',
-    },
-    {
-      displayName: 'お届け先 住所2',
-      name: 'delivery_address_2',
-      type: 'text',
-    },
-    {
-      displayName: 'お届け先 住所3',
-      name: 'delivery_address_3',
-      type: 'text',
-    },
-    {
-      displayName: 'お支払い方法',
-      name: 'delivery_payment_type',
-      type: 'radio',
-    },
-    {
-      displayName: '配送方法',
-      name: 'delivery_shipping_type',
-      type: 'text',
-    },
-    {
-      displayName: 'その他 要望等',
-      name: 'message',
-      type: 'text_area',
     },
   ];
 };

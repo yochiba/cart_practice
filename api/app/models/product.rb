@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# activeRecordじゃない？
 class Product < ApplicationRecord
   belongs_to :category
 
@@ -25,6 +26,8 @@ class Product < ApplicationRecord
   validates :serial_number, presence: true, uniqueness: true,
              length: { is: 10 }, format: { with: VALID_SERIAL_NUMBER_FORMAT }
   validates :stock, presence: true, numericality: true
+
+  scope :displayable, -> { where(display_flag: true) }
 
   # product生成
   def create_product(params)

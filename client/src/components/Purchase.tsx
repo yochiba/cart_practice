@@ -1,74 +1,209 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { AppState } from '../stores/index';
 import { useSelector } from "react-redux";
 import { AccountState } from '../stores/Account';
+import { PurchaseSessionsState } from '../stores/PurchaseSessions';
 import Util from '../Common/Util';
+
 
 const Purchase: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
+  const purchaseSessionsStore: PurchaseSessionsState = useSelector<AppState, PurchaseSessionsState>(state => state.purchaseSessionsStore);
 
   // State管理
-  const [purchase, setPurchase] = useState<Util.Purchase>(Util.initialPurchase);
-  // TODO purchaseが完了したらsessionsを作成する。
+  const [purchaseHistory, setPurchaseHistory] = useState<Util.PurchaseHistory>(Util.initialPurchaseHistory);
+  const [delivery, setDelivery] = useState<Util.Delivery>(Util.initialDelivery);
 
-  const onChangePurchaseInput = (e: any) => {
+  useEffect(() => {
+    const purchaseSessions: Util.Delivery = purchaseSessionsStore.deliverySessions;
+    if (purchaseSessions === Util.initialDelivery) {
+      // setDelivery(accountStore);
+    }
+  })
+
+
+  const onChangeInput = (e: any) => {
     const name: string = e.target.name;
-    const value: string = e.target.value;
-
-    // FIXME 表示するinputをPurchaseに合わせる
+    
     switch (name) {
+      case 'payment_type':
+        setPurchaseHistory({...purchaseHistory, payment_type: composeValue<number>(e.target.value)});
+        break;
+      case 'payment_status':
+        setPurchaseHistory({...purchaseHistory, payment_status: composeValue<number>(e.target.value)});
+        break;
+      case 'shipping_type':
+        setPurchaseHistory({...purchaseHistory, shipping_type: composeValue<number>(e.target.value)});
+        break;
+      case 'shipping_status':
+        setPurchaseHistory({...purchaseHistory, shipping_status: composeValue<number>(e.target.value)});
+        break;
+      case 'message':
+        setPurchaseHistory({...purchaseHistory, message: composeValue<string>(e.target.value)});
+        break;
       case 'firstname':
-        setPurchase({...purchase, firstname: value})
+        setDelivery({...delivery, firstname: composeValue<string>(e.target.value)});
         break;
       case 'lastname':
-        setPurchase({...purchase, lastname: value})
+        setDelivery({...delivery, lastname: composeValue<string>(e.target.value)});
         break;
       case 'email':
-        setPurchase({...purchase, email: value})
+        setDelivery({...delivery, email: composeValue<string>(e.target.value)});
         break;
       case 'phone':
-        setPurchase({...purchase, phone: value})
+        setDelivery({...delivery, phone: composeValue<string>(e.target.value)});
+        break;
+      case 'zip':
+        setDelivery({...delivery, zip: composeValue<string>(e.target.value)});
+        break;
+      case 'address_one':
+        setDelivery({...delivery, address_one: composeValue<string>(e.target.value)});
+        break;
+      case 'address_two':
+        setDelivery({...delivery, address_two: composeValue<string>(e.target.value)});
+        break;
+      case 'address_three':
+        setDelivery({...delivery, address_three: composeValue<string>(e.target.value)});
         break;
       default:
         break;
     }
   }
 
-  const purchaseInputs = () => {
-    return (
-      Util.PURCHASE_FORMAT.map((purchaseData: Util.InputFormat) => {
+  const composeValue = function<T>(value: T ): T {
+    return value;
+  }
+
+  const purchaseForm = (formType: string) => {
+
+    switch (formType) {
+      case 'purchase-history':
         return (
-          <div className={purchaseData.name}>
-            <label
-              htmlFor={`purchase-${purchaseData.name}`}
-              key={`purchase-label-${purchaseData.name}`}
-            >
-              {purchaseData.displayName}
-            </label>
-            <input
-              type={purchaseData.type}
-              id={`purchase-${purchaseData.name}`}
-              name={purchaseData.name}
-              onChange={(e) => {onChangePurchaseInput(e)}}
-              key={`purchase-input-${purchaseData.name}`}
-            />
-          </div>
+          Util.PURCHASE_HISTORY_FORMAT.map((purchaseHistoryData: Util.InputFormat) => {
+            switch (purchaseHistoryData.name) {
+              case 'message':
+                return inputTextArea(formType, purchaseHistoryData.name, purchaseHistoryData.displayName);
+              case 'total_price':
+                return inputText(formType, purchaseHistoryData);
+              default:
+                return inputCheckBox(formType, purchaseHistoryData.name);
+            }
+          })
         );
-      })
+      case 'delivery':
+        return (
+          Util.DELIVERY_FORMAT.map((deliveryData: Util.InputFormat) => {
+            return inputText(formType, deliveryData);
+          })
+        );
+      default:
+        return null;
+    }
+  }
+
+  const inputTextArea = (formType: string, name: string, displayName: string) => {
+    return (
+      <div className={name}>
+        <label
+          htmlFor={`${formType}-${name}`}
+          key={`${formType}-label-${name}`}
+        >
+          {displayName}
+        </label>
+        <textarea
+          id={`${formType}-${name}`}
+          name={name}
+          onChange={(e) => {onChangeInput(e)}}
+        >
+        </textarea>
+      </div>
     );
+  }
+
+  const inputText = (formType: string, data: Util.InputFormat) => {
+    return (
+      <div className={data.name}>
+        <label
+          htmlFor={`${formType}-${data.name}`}
+          key={`${formType}-label-${data.name}`}
+        >
+          {data.displayName}
+        </label>
+        <input
+          type={data.type}
+          id={`${formType}-${data.name}`}
+          name={data.name}
+          onChange={(e) => {onChangeInput(e)}}
+          key={`${formType}-input-${data.name}`}
+        />
+      </div>
+    );
+  }
+
+  const inputCheckBox = (formType: string, name: string) => {
+    let checkBoxOptions: Util.typeOption[] = [];
+    switch (name) {
+      case 'payment_type':
+        checkBoxOptions = Util.paymentTypeOptions;
+        break;
+      case 'delivery_type':
+        checkBoxOptions = Util.deliveryTypeOptions;
+        break;
+      default:
+        break;
+    }
+
+    return (
+      <div className={name}>
+        {
+          checkBoxOptions.map((checkBoxOption: Util.typeOption) => {
+            return(
+              <>
+                <label
+                  htmlFor={`${formType}-${checkBoxOption.name}`}
+                  key={`${formType}-label-${checkBoxOption.name}`}
+                >
+                  {checkBoxOption.name}
+                </label>
+                <input
+                  type='radio'
+                  id={`${formType}-${checkBoxOption.name}`}
+                  name={name}
+                  value={checkBoxOption.value}
+                  onChange={(e) => {onChangeInput(e)}}
+                  key={`${formType}-input-${checkBoxOption.name}`}
+                />
+              </>
+            );
+          })
+        }
+      </div>
+    );
+  }
+
+  // 
+  const handlePurchaseSessions = () => {
+
   }
 
   return (
     <section className='Purchase'>
-      <h1>商品確認＆ユーザー情報入力</h1>
-      {/* 先にログイン機能を実装 */}
-      {/* <form>
-        <div class="preference">
-          <label for="cheese">Do you like cheese?</label>
-          <input type="checkbox" name="cheese" id="cheese">
-        </div>
-      </form> */}
+      <section className='purchase-history-form'>
+        <h2>購入情報入力</h2>
+        {purchaseForm('purchase-history')}
+      </section>
+      <section className='delivery-form'>
+        <h2>お届け先情報</h2>
+        {purchaseForm('delivery')}
+      </section>
+      <Link
+        to='/purchase/confirmation'
+        onClick={() => {handlePurchaseSessions()}}
+      >
+        最終確認へ進む
+      </Link>
     </section>
   );
 }
