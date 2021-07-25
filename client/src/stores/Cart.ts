@@ -21,7 +21,7 @@ const initialCartState: CartState = {
 }
 
 // Cart Reducer
-export const CartReducer = reducerWithInitialState(initialCartState)
+export const cartReducer = reducerWithInitialState(initialCartState)
   .case(cartActions.updateCart, (state, cart) => {
     return Object.assign({}, state, { cart });
   })

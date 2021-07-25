@@ -5,6 +5,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { AppState } from './stores/index';
 import { AccountState } from './stores/Account';
 import { CartState } from './stores/Cart';
+import { PurchaseHistoryState } from './stores/PurchaseHistory';
 import { useSelector } from "react-redux";
 import Navigation from './components/Navigation';
 import ProductList from './components/Product/ProductList';
@@ -22,10 +23,15 @@ const App: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
   const cartStore: CartState = useSelector<AppState, CartState>(state => state.cartStore);
+  const purchaseHistoryStore: PurchaseHistoryState = useSelector<AppState, PurchaseHistoryState>(state => state.purchaseHistoryStore);
 
-  const accountSignIn = () => {
+  const checkAccountSignIn = () => {
     return accountStore.accessToken !== '' && accountStore.uid !== '' && accountStore.client !== '';
   }
+
+  // const hasPurchaseSessions = () => {
+  //   return purchaseHistoryStore;
+  // }
 
   return (
     <div className='App'>
@@ -41,23 +47,27 @@ const App: React.FC = () => {
             render={() => {
               if (cartStore.cart.length === 0) {
                 return <Redirect to='/' />
-              } else if (!accountSignIn()) {
+              } else if (!checkAccountSignIn()) {
                 return <Redirect to='/sign-in' />
               } else {
                 return <Purchase />
               }
             }}
           />
+          {/* <Route 
+            exact path='/purchase/confirmation'
+            render={ () => hasPurchaseSessions() ? <Redirect to='/purchase' /> : <PurchaseConfirmation /> }
+          /> */}
           <Route exact path='/purchase/confirmation' component={PurchaseConfirmation} />
           <Route exact path='/complete' component={Complete} />
           {/* セッション持たせないとダメっぽい ここまで */}
           <Route 
             exact path='/sign-in'
-            render={ () => accountSignIn() ? <Redirect to='/' /> : <SignIn /> }
+            render={ () => checkAccountSignIn() ? <Redirect to='/' /> : <SignIn /> }
           />
           <Route
             exact path='/sign-up'
-            render={ () => accountSignIn() ? <Redirect to='/' /> : <SignUp /> }
+            render={ () => checkAccountSignIn() ? <Redirect to='/' /> : <SignUp /> }
           />
         </Switch>
       </Router>

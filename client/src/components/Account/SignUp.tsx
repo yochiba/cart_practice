@@ -190,8 +190,6 @@ const SignUp: React.FC = () => {
       dispatch(accountActions.updateUid(res.data.data.uid));
       dispatch(accountActions.updateFirstname(res.data.data.firstname));
       dispatch(accountActions.updateLastname(res.data.data.lastname));
-
-      setAccountSignUp(Util.initialAccountSignUp);
     })
     .catch(error => {
       console.log(error);

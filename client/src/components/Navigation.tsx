@@ -10,7 +10,7 @@ import Axios from 'axios';
 const Navigation: React.FC = () => {
   // Redux
   const accountStore: AccountState = useSelector<AppState, AccountState>(state => state.accountStore);
-  const accountDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const signOut = (e: any) => {
     e.preventDefault();
@@ -18,22 +18,30 @@ const Navigation: React.FC = () => {
     Axios.delete(`${Api.accountSignOut}?access-token=${accountStore.accessToken}&client=${accountStore.client}&uid=${accountStore.uid}`)
     .then(res => {
       // dispatch
-      accountDispatch(accountActions.updateId(0));
-      accountDispatch(accountActions.updateAccessToken(''));
-      accountDispatch(accountActions.updateProvider(''));
-      accountDispatch(accountActions.updateClient(''));
-      accountDispatch(accountActions.updateUid(''));
-      accountDispatch(accountActions.updateFirstname(''));
-      accountDispatch(accountActions.updateLastname(''));
+      dispatch(accountActions.updateId(0));
+      dispatch(accountActions.updateAccessToken(''));
+      dispatch(accountActions.updateProvider(''));
+      dispatch(accountActions.updateClient(''));
+      dispatch(accountActions.updateUid(''));
+      dispatch(accountActions.updateFirstname(''));
+      dispatch(accountActions.updateLastname(''));
     })
     .catch(error => {
       console.log(error);
+      // dispatch
+      dispatch(accountActions.updateId(0));
+      dispatch(accountActions.updateAccessToken(''));
+      dispatch(accountActions.updateProvider(''));
+      dispatch(accountActions.updateClient(''));
+      dispatch(accountActions.updateUid(''));
+      dispatch(accountActions.updateFirstname(''));
+      dispatch(accountActions.updateLastname(''));
     })
   }
 
 
   if (accountStore.accessToken && accountStore.uid && accountStore.client) {
-    console.log(accountStore.lastname);
+    console.log(accountStore);
     return (
       <nav className='Navigation'>
         <Link to='/'>Home</Link>
