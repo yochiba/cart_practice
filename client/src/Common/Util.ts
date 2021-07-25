@@ -133,8 +133,8 @@ namespace Util {
   export type PurchaseHistory = {
     payment_type: number;
     payment_status: number;
-    shipping_type: number;
-    shipping_status: number;
+    delivery_type: number;
+    delivery_status: number;
     message: string;
     total_price: number;
   };
@@ -143,8 +143,8 @@ namespace Util {
   export const initialPurchaseHistory: PurchaseHistory = {
     payment_type: 0,
     payment_status: 0,
-    shipping_type: 0,
-    shipping_status: 0,
+    delivery_type: 0,
+    delivery_status: 0,
     message: '',
     total_price: 0,
   };

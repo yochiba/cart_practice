@@ -38,7 +38,7 @@ const initialAccountState: AccountState = {
 }
 
 // Account Reducer
-export const AccountReducer = reducerWithInitialState(initialAccountState)
+export const accountReducer = reducerWithInitialState(initialAccountState)
   .case(accountActions.updateId, (state, id) => {
     return Object.assign({}, state, { id });
   })

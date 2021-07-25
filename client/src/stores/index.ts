@@ -1,19 +1,25 @@
 import { createStore, combineReducers, compose, Reducer } from 'redux';
 import persistState from 'redux-localstorage';
-import { AccountReducer, AccountState} from './Account';
-import { CartReducer, CartState} from './Cart';
-import { PurchaseSessionsReducer, PurchaseSessionsState} from './PurchaseSessions';
+import { accountReducer, AccountState} from './Account';
+import { cartReducer, CartState} from './Cart';
+import { purchaseHistoryReducer, PurchaseHistoryState} from './PurchaseHistory';
+import { deliveryReducer, DeliveryState} from './Delivery';
+import { purchaseSessionReducer, PurchaseSessionState } from './PurchaseSession';
 
 export type AppState = {
-  accountStore: AccountState,
-  cartStore: CartState,
-  purchaseSessionsStore: PurchaseSessionsState,
+  accountStore: AccountState;
+  cartStore: CartState;
+  purchaseSessionStore: PurchaseSessionState;
+  purchaseHistoryStore: PurchaseHistoryState;
+  deliveryStore: DeliveryState;
 };
 
 const reducer: Reducer = combineReducers<AppState>({
-  accountStore: AccountReducer,
-  cartStore: CartReducer,
-  purchaseSessionsStore: PurchaseSessionsReducer,
+  accountStore: accountReducer,
+  cartStore: cartReducer,
+  purchaseSessionStore: purchaseSessionReducer,
+  purchaseHistoryStore: purchaseHistoryReducer,
+  deliveryStore: deliveryReducer,
 });
 
 const enhancer = compose(

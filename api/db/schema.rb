@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
+    t.index ["firstname_ciphertext"], name: "index_accounts_on_firstname_ciphertext"
+    t.index ["lastname_ciphertext"], name: "index_accounts_on_lastname_ciphertext"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_accounts_on_uid_and_provider", unique: true
   end
