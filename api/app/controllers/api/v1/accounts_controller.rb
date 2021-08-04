@@ -6,12 +6,12 @@ class Api::V1::AccountsController < ApplicationController
   # GET /api/v1/accounts
   def index
     accounts = Account.all
-    render json: accounts, status: :ok, result: :ok
+    render json: accounts, status: :ok, result: :ok, serializer: AccountSerializer
   end
 
   # GET /api/v1/accounts/:id
   def show
-    render json: @account, status: :ok, result: :ok
+    render json: @account, status: :ok, result: :ok, serializer: AccountSerializer
   end
 
   private

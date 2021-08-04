@@ -12,13 +12,13 @@ class Api::V1::ProductsController < ApplicationController
 
   # POST /api/v1/products
   def create
-    response = Product.new().create_product(params)
+    response = Product.generate_product(params)
     render json: response
   end
 
   # GET /api/v1/products/:id
   def show
-    render json: @product
+    render json: @product, status: :ok, result: :ok, serializer: ProductSerializer
   end
 
   # PUT /api/v1/products/:id
@@ -30,9 +30,9 @@ class Api::V1::ProductsController < ApplicationController
   # DELETE /api/v1/products/:id
   def destroy
     if @product.destroy
-      render json: { status: :ok, result: :ok }
+      render json: { status: 200, result: :ok }
     else
-      render json: { status: :error, result: :error }
+      render json: { status: 500, result: :error }
     end
   end
 

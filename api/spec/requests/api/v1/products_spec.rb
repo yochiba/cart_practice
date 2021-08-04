@@ -12,7 +12,7 @@ RSpec.describe "Api::V1::Products", type: :request do
   end
 
   context 'GET /api/v1/products/:id' do
-    before { get "/api/v1/products/#{product.id}" }
+    before { get api_v1_products_path(product.id) }
     it { expect(response).to have_http_status 200 }
   end
 end

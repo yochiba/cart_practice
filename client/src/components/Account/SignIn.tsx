@@ -7,6 +7,8 @@ import Util from '../../Common/Util';
 import Headers from '../../Common/Headers';
 import Api from '../../Common/Api';
 import Axios from 'axios';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const SignIn: React.FC = () => {
   // Redux
@@ -37,21 +39,16 @@ const SignIn: React.FC = () => {
     return (
       Util.SIGN_IN_FORMAT.map((signInData: Util.InputFormat) => {
         return (
-          <div className={signInData.name}>
-            <label
-              htmlFor={`sign-in-${signInData.name}`}
-              key={`sign-in-label-${signInData.name}`}
-            >
-              {signInData.displayName}
-            </label>
-            <input
+          <Form.Group className='mb-3' controlId='formSignIn'>
+            <Form.Label>{signInData.displayName}</Form.Label>
+            <Form.Control
               type={signInData.type}
-              id={`sign-in-${signInData.name}`}
               name={signInData.name}
+              placeholder={signInData.displayName}
               onChange={(e) => {onChangeSignInInput(e)}}
               key={`sign-in-input-${signInData.name}`}
             />
-          </div>
+          </Form.Group>
         );
       })
     );
@@ -81,10 +78,12 @@ const SignIn: React.FC = () => {
   return (
     <div className='SignIn'>
       <h1>SignIn</h1>
-      <form onSubmit={(e) => {handleSubmitSignIn(e)}}>
+      <Form onSubmit={(e) => {handleSubmitSignIn(e)}}>
         {signInInputs()}
-        <input type='submit' value='ログイン' />
-      </form>
+        <Button variant='primary' type='submit'>
+          ログイン
+        </Button>
+      </Form>
       <Link to='/sign-up'>新規登録</Link>
     </div>
   );

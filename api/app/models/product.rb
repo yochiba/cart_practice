@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# activeRecordじゃない？
 class Product < ApplicationRecord
   belongs_to :category
 
@@ -30,7 +29,7 @@ class Product < ApplicationRecord
   scope :displayable, -> { where(display_flag: true) }
 
   # product生成
-  def create_product(params)
+  def self.generate_product(params)
     category = Category.find(params[:category_id])
     # serial_number生成
     product_count = Product.where(category_id: category.id).count + 1
@@ -39,9 +38,9 @@ class Product < ApplicationRecord
     category.products.create!(
       name: params[:name],
       description: params[:description],
-      price: params[:price].to_i,
+      price: params[:price],
       serial_number: serial_number,
-      stock: params[:stock].to_i,
+      stock: params[:stock],
       display_flag: params[:display_flag],
     )
   end
