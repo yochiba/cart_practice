@@ -5,6 +5,8 @@ import Util from '../../Common/Util';
 import Headers from '../../Common/Headers';
 import Api from '../../Common/Api';
 import Axios from 'axios';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const SignUp: React.FC = () => {
   // Redux
@@ -58,21 +60,16 @@ const SignUp: React.FC = () => {
     return (
       Util.SIGN_UP_FORMAT.map((signUpData: Util.InputFormat) => {
         return (
-          <div className={signUpData.name}>
-            <label
-              htmlFor={`sign-up-${signUpData.name}`}
-              key={`sign-up-label-${signUpData.name}`}
-            >
-              {signUpData.displayName}
-            </label>
-            <input
+          <Form.Group className='mb-3' controlId='formBasicEmail'>
+            <Form.Label>{signUpData.displayName}</Form.Label>
+            <Form.Control
               type={signUpData.type}
-              id={`sign-up-${signUpData.name}`}
               name={signUpData.name}
+              placeholder={signUpData.displayName}
               onChange={(e) => {onChangeSignUpInput(e)}}
               key={`sign-up-input-${signUpData.name}`}
             />
-          </div>
+          </Form.Group>
         );
       })
     );
@@ -163,14 +160,13 @@ const SignUp: React.FC = () => {
   const confirmationModal = () => {
     if (modalFlag) {
       return (
-        <form onSubmit={(e) => {handleSubmitSignUp(e)}}>
+        <Form onSubmit={(e) => {handleSubmitSignUp(e)}}>
           {signUpConfirmationInputs()}
-          <button onClick={()=> setModalFlag(false)}>内容修正</button>
-          <input
-            type='submit'
-            value='登録'
-          />
-        </form>
+          <button onClick={() => setModalFlag(false)}>内容修正</button>
+          <Button variant='primary' type='submit'>
+            登録
+          </Button>
+        </Form>
       );
     } else {
       return null;

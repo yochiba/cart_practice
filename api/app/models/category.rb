@@ -18,7 +18,7 @@ class Category < ApplicationRecord
              length: { is: 3 }, format: { with: VALID_SERIAL_PREFIX_FORMAT }
 
   # category生成
-  def create_category(params)
+  def self.generate_category(params)
     # serial_prefix生成
     last_category = Category.order(id: :asc).last
     serial_prefix = if last_category.present?

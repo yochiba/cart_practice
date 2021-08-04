@@ -18,4 +18,17 @@ class Delivery < ApplicationRecord
   validates :zip, presence: true
   validates :address_one, presence: true
   validates :address_two, presence: true
+
+  def self.generate_delivery(params)
+    Delivery.create!(
+      firstname: params[:firstname],
+      lastname: params[:lastname],
+      email: params[:email],
+      phone: params[:phone],
+      zip: params[:zip],
+      address_one: params[:address_one],
+      address_two: params[:address_two],
+      address_three: params[:address_three],
+    )
+  end
 end

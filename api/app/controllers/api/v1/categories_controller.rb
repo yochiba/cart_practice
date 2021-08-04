@@ -12,7 +12,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   # POST /api/v1/categories
   def create
-    response = Category.new().create_category(params)
+    response = Category.generate_category(params)
     render json: response
   end
 
@@ -29,9 +29,9 @@ class Api::V1::CategoriesController < ApplicationController
   # DELETE /api/v1/categories/:id
   def destroy
     if @category.destroy
-      render json: { status: :ok, result: :ok }
+      render json: { status: 200, result: :ok }
     else
-      render json: { status: :error, result: :error }
+      render json: { status: 500, result: :error }
     end
   end
 
